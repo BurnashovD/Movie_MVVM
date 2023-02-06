@@ -16,7 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         let filmsVC = FilmsTableViewController()
         let navController = UINavigationController(rootViewController: filmsVC)
-
         window.rootViewController = navController
         window.makeKeyAndVisible()
         self.window = window
