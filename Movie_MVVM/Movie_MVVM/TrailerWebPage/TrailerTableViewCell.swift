@@ -3,7 +3,7 @@
 
 import UIKit
 
-// Класс отвечает за ячейку с трейлером к фильму
+/// Ячейка с постерами к выбранному фильму
 final class TrailerTableViewCell: UITableViewCell {
     // MARK: - Visual components
 
@@ -37,6 +37,8 @@ final class TrailerTableViewCell: UITableViewCell {
         return scroll
     }()
 
+    // MARK: - Private properties
+
     private lazy var tapFilmImageViewRecognizer = UITapGestureRecognizer(
         target: self,
         action: #selector(openTrailerWebPageAction)
@@ -44,25 +46,23 @@ final class TrailerTableViewCell: UITableViewCell {
 
     // MARK: - Public properties
 
-    var sendOpenWebPageAction: (() -> Void)?
-    private var backdropImageId = String()
+    var openWebHandler: (() -> Void)?
 
-    // MARK: - LifeCycle
+    // MARK: - Public methods
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        configUI()
-        getTrailerImage()
+        configureUI()
     }
 
-    func refresh(_ filmInfo: FilmInfoTableViewController) {
-        secondFilmImageView.image = filmInfo.posterimage
-        backdropImageId = filmInfo.backdropImageId
+    func configure(_ movie: Movie) {
+        secondFilmImageView.image = movie.filmImage
+        filmImageView.fetchImage(movie.backdropPath)
     }
 
     // MARK: - Private methods
 
-    private func configUI() {
+    private func configureUI() {
         selectionStyle = .none
         contentView.addSubview(filmImagesScrollView)
         contentView.backgroundColor = UIColor(named: Constants.blueViewColorname)
@@ -97,24 +97,12 @@ final class TrailerTableViewCell: UITableViewCell {
         secondFilmImageView.heightAnchor.constraint(equalToConstant: 210).isActive = true
     }
 
-    private func getTrailerImage() {
-        let imageURL = "\(Constants.trailerImageURLString)\(backdropImageId)"
-        guard let url = URL(string: imageURL) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
-
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                self.filmImageView.image = UIImage(data: data)
-            }
-        }.resume()
-    }
-
     @objc private func openTrailerWebPageAction() {
-        sendOpenWebPageAction?()
+        openWebHandler?()
     }
 }
 
-/// Constants
+/// Константы
 extension TrailerTableViewCell {
     enum Constants {
         static let blueViewColorname = "blueView"

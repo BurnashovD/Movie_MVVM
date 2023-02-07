@@ -3,71 +3,69 @@
 
 import UIKit
 
-// Класс отвечает за показ таблицы с фильмами
+/// Экран списка фильмов
 final class FilmsTableViewController: UITableViewController {
+    // MARK: - Private properties
+
+    private var actualFilter: NetworkService.ParameterType = .topRated
+    private var cellTypes: [CellTypes] = [.filters, .films]
+
     // MARK: - Public properties
 
-    private var movies = [Result]()
-    private var cellTypes: [CellTypes] = [.filters, .films]
-    private var actualURL = Constants.topRatedFilmsURLString
-    var sendOverviewText: (() -> Void)?
+    var viewModel: FilmsViewModelProtocol?
+    var viewData: ViewData = .initial {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configNavigationBar()
-        configCells()
-        reformMovies()
+        configureUI()
+        viewModel?.fetchMovies(actualFilter)
+        updateViewData()
     }
 
     // MARK: - Private methods
 
-    private func configNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+    private func configureUI() {
         title = Constants.filmsText
-        navigationController?.navigationBar
-            .largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.barTintColor = UIColor(named: Constants.blueViewColorName)
-        navigationController?.navigationBar.tintColor = UIColor.red
         view.backgroundColor = UIColor(named: Constants.blueViewColorName)
+        configureCells()
     }
 
-    private func configCells() {
+    private func updateViewData() {
+        viewModel?.updateHandler = { [weak self] viewData in
+            guard let self = self else { return }
+            self.viewData = viewData
+        }
+    }
+
+    private func configureCells() {
         tableView.register(FilmTableViewCell.self, forCellReuseIdentifier: Constants.filmCellIdentifier)
         tableView.register(FilterTableViewCell.self, forCellReuseIdentifier: Constants.filterCellIdentifier)
         tableView.showsVerticalScrollIndicator = false
     }
 
-    private func reformMovies() {
-        let session = URLSession.shared
-
-        guard let url = URL(string: actualURL) else { return }
-        session.dataTask(with: URLRequest(url: url)) { data, _, error in
-
-            do {
-                guard let newData = data else { return }
-                let result = try JSONDecoder().decode(MovieResult.self, from: newData)
-                DispatchQueue.main.async {
-                    self.movies = result.results
-                    self.tableView.reloadData()
-                }
-            } catch {
-                print(Constants.errorText, error)
-            }
-        }.resume()
+    private func moviesCount() -> Int {
+        switch viewData {
+        case .initial:
+            return 0
+        case .loading:
+            return 1
+        case let .success(movies):
+            return movies.count
+        case .failure:
+            return 0
+        }
     }
 }
 
-/// Constants and CellTypes
+/// Константы и типы ячеек
 extension FilmsTableViewController {
     enum Constants {
-        static let topRatedFilmsURLString =
-            "https://api.themoviedb.org/3/movie/top_rated?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
-        static let upcomingFilmsURLString =
-            "https://api.themoviedb.org/3/movie/upcoming?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
-        static let popularFilmsURLString =
-            "https://api.themoviedb.org/3/movie/popular?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-Ru&page=1"
         static let filmCellIdentifier = "film"
         static let filterCellIdentifier = "filter"
         static let blueViewColorName = "blueView"
@@ -94,7 +92,7 @@ extension FilmsTableViewController {
         case .filters:
             return 1
         case .films:
-            return movies.count
+            return moviesCount()
         }
     }
 
@@ -106,9 +104,9 @@ extension FilmsTableViewController {
                 withIdentifier: Constants.filterCellIdentifier,
                 for: indexPath
             ) as? FilterTableViewCell else { return UITableViewCell() }
-            cell.sendURLClosure = { url in
-                self.actualURL = url
-                self.reformMovies()
+            cell.sendURLHandler = { filter in
+                self.actualFilter = filter
+                self.viewModel?.fetchMovies(self.actualFilter)
             }
 
             return cell
@@ -118,7 +116,7 @@ extension FilmsTableViewController {
                 for: indexPath
             ) as? FilmTableViewCell else { return UITableViewCell() }
 
-            cell.movieRefresh = movies[indexPath.row]
+            cell.viewUpdate(viewData: viewData, indexPath.row)
 
             return cell
         }
@@ -126,11 +124,7 @@ extension FilmsTableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.indexPathForSelectedRow
-        guard let selectedCell = selectedCell,
-              let movie = tableView.cellForRow(at: selectedCell) as? FilmTableViewCell else { return }
-        let filmInfoTVC = FilmInfoTableViewController()
-        filmInfoTVC.movies = movie
-        navigationController?.pushViewController(filmInfoTVC, animated: true)
+        viewModel?.selectedRowAction(tableView: tableView, selectedCell: selectedCell)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -3,11 +3,11 @@
 
 import UIKit
 
-// Класс отвечает за коллекцию с актерами
+/// Коллекция актеров
 final class ActorsCollectionViewCell: UICollectionViewCell {
     // MARK: - Visual components
 
-    private let actorName: UILabel = {
+    private let actorNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 12, weight: .heavy)
@@ -25,28 +25,11 @@ final class ActorsCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    var filmId = String()
-    var refreshActors: Cast? {
-        didSet {
-            guard let profPath = refreshActors?.profilePath else { return }
-            actorName.text = refreshActors?.originalName
-            let imageURL = "\(Constants.imageURLString)\(profPath)"
-            guard let url = URL(string: imageURL) else { return }
-            URLSession.shared.dataTask(with: url) { data, _, error in
-
-                guard let data = data, error == nil else { return }
-                DispatchQueue.main.async {
-                    self.actorImageView.image = UIImage(data: data)
-                }
-            }.resume()
-        }
-    }
-
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(actorName)
+        contentView.addSubview(actorNameLabel)
         contentView.addSubview(actorImageView)
     }
 
@@ -55,19 +38,27 @@ final class ActorsCollectionViewCell: UICollectionViewCell {
         fatalError(Constants.errorText)
     }
 
+    // MARK: - Public methods
+
     override func layoutSubviews() {
         super.layoutSubviews()
         createLabelAnchors()
         createImageViewAnchors()
     }
 
+    func configure(_ actor: Actor) {
+        guard let path = actor.profilePath else { return }
+        actorNameLabel.text = actor.originalName
+        actorImageView.fetchImage(path)
+    }
+
     // MARK: - Private methods
 
     private func createLabelAnchors() {
-        actorName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        actorName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
-        actorName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 15).isActive = true
-        actorName.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        actorNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
+        actorNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
+        actorNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 15).isActive = true
+        actorNameLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
     private func createImageViewAnchors() {
@@ -78,10 +69,11 @@ final class ActorsCollectionViewCell: UICollectionViewCell {
     }
 }
 
-///  Constants
+/// Константы
 extension ActorsCollectionViewCell {
     enum Constants {
         static let errorText = "init(coder:) has not been implemented"
         static let imageURLString = "http://image.tmdb.org/t/p/w500"
+        static let blueViewColorname = "blueView"
     }
 }

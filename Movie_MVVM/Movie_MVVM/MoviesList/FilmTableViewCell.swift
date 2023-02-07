@@ -3,11 +3,11 @@
 
 import UIKit
 
-// Класс отвечает за ячейку с информацией о фильме
+/// Ячейка с информацией о фильме
 final class FilmTableViewCell: UITableViewCell {
     // MARK: - Visual components
 
-    let cellView: UIView = {
+    private let cellView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 25
@@ -18,7 +18,7 @@ final class FilmTableViewCell: UITableViewCell {
         return view
     }()
 
-    let filmImageView: UIImageView = {
+    private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 15
@@ -26,7 +26,7 @@ final class FilmTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    let filmNameLabel: UILabel = {
+    private let filmNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
@@ -47,7 +47,7 @@ final class FilmTableViewCell: UITableViewCell {
         return label
     }()
 
-    let filmOverviewLabel: UILabel = {
+    private let filmOverviewLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         label.numberOfLines = 0
@@ -58,19 +58,17 @@ final class FilmTableViewCell: UITableViewCell {
         return label
     }()
 
-    var filmId = String()
-    var backdropImageId = String()
+    // MARK: - Private properties
+
+    private var filmId = ""
+    private var backdropImageId = ""
 
     // MARK: - Public properties
 
-    var movieRefresh: Result? {
-        didSet {
-            guard let movieRefresh = movieRefresh else { return }
-            refreshMovies(movieRefresh)
-        }
-    }
+    var movie: Movie?
+    var viewData: ViewData = .initial
 
-    // MARK: - LifeCycle
+    // MARK: - Public properties
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -78,6 +76,48 @@ final class FilmTableViewCell: UITableViewCell {
     }
 
     // MARK: - Private methods
+
+    func createCurrentMovie() {
+        movie = Movie(
+            backdropPath: backdropImageId,
+            id: Int(filmId) ?? 0,
+            overview: filmOverviewLabel.text ?? "",
+            posterPath: "",
+            title: filmNameLabel.text ?? "",
+            voteAverage: 0.0,
+            filmImage: filmImageView.image ?? UIImage(),
+            currentFilmId: filmId
+        )
+    }
+
+    func configure(_ movie: Movie) {
+        filmNameLabel.text = movie.title
+        filmRateLabel.text = String(movie.voteAverage)
+        filmOverviewLabel.text = movie.overview
+        filmId = String(movie.id)
+        backdropImageId = movie.backdropPath
+        filmImageView.fetchImage(movie.posterPath)
+    }
+
+    func viewUpdate(viewData: ViewData, _ index: Int) {
+        self.viewData = viewData
+        switch viewData {
+        case .initial:
+            break
+        case .loading:
+            configureLoadingCell()
+        case let .success(movie):
+            configure(movie[index])
+        case let .failure(error):
+            print(error.localizedDescription)
+        }
+    }
+
+    private func configureLoadingCell() {
+        filmImageView.image = UIImage(systemName: "person")
+        filmNameLabel.text = "Loading..."
+        filmOverviewLabel.text = "Please wait some more time"
+    }
 
     private func configUI() {
         backgroundColor = UIColor(named: Constants.blueViewColorName)
@@ -92,24 +132,6 @@ final class FilmTableViewCell: UITableViewCell {
         createFilmNameLabelAnchors()
         createFilmRatesAnchors()
         createFilmOverviewLabelAnchors()
-    }
-
-    private func refreshMovies(_ model: Result) {
-        filmNameLabel.text = model.title
-        filmRateLabel.text = String(model.voteAverage)
-        filmOverviewLabel.text = model.overview
-        filmId = String(model.id)
-        backdropImageId = model.backdropPath
-
-        let imageURL = "\(Constants.imageURLString)\(model.posterPath)"
-        guard let url = URL(string: imageURL) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
-
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                self.filmImageView.image = UIImage(data: data)
-            }
-        }.resume()
     }
 
     private func createViewAnchors() {
@@ -149,7 +171,7 @@ final class FilmTableViewCell: UITableViewCell {
     }
 }
 
-/// Constants
+/// Константы
 extension FilmTableViewCell {
     enum Constants {
         static let cellViewColorName = "cellViewColor"

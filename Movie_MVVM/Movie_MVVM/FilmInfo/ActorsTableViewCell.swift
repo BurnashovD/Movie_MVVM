@@ -3,11 +3,11 @@
 
 import UIKit
 
-// Класс отвечает за ячейку с актерами
+/// Ячейка с коллекцией актеров
 final class ActorsTableViewCell: UITableViewCell {
     // MARK: - Visual components
 
-    let actorsCollectionView: UICollectionView = {
+    private let actorsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 1, left: 10, bottom: 10, right: 10)
         layout.itemSize = CGSize(width: 100, height: 100)
@@ -19,24 +19,22 @@ final class ActorsTableViewCell: UITableViewCell {
         return collection
     }()
 
-    // MARK: - Public properties
+    // MARK: - Private properties
 
-    var filmId = ""
-    var actorsResults = [Cast]()
+    private var actors = [Actor]()
 
-    // MARK: - LifeCycle
+    // MARK: - Public methods
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         configUI()
     }
 
-    public func refresh(filmInfo: FilmInfoTableViewController) {
-        filmId = filmInfo.filmId
-        actorsResults = filmInfo.actorsResults
+    func configure(actors: [Actor]) {
+        self.actors = actors
     }
 
-    // MARK: - Private func
+    // MARK: - Private methods
 
     private func configUI() {
         backgroundColor = UIColor(named: Constants.blueViewColorName)
@@ -59,7 +57,7 @@ final class ActorsTableViewCell: UITableViewCell {
     }
 }
 
-/// Constants
+/// Константы
 extension ActorsTableViewCell {
     enum Constants {
         static let cellIdentifier = "cell"
@@ -71,7 +69,7 @@ extension ActorsTableViewCell {
 
 extension ActorsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        actorsResults.count
+        actors.count
     }
 
     func collectionView(
@@ -83,7 +81,7 @@ extension ActorsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
             for: indexPath
         ) as? ActorsCollectionViewCell else { return UICollectionViewCell() }
 
-        cell.refreshActors = actorsResults[indexPath.row]
+        cell.configure(actors[indexPath.row])
         return cell
     }
 }

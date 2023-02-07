@@ -12,10 +12,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options _: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
-
+        let builder = ModulBuilder()
+        let navController = MainNavigationController()
+        let coordinator = MainCoordintor(navigationController: navController, builder: builder)
+        coordinator.initial()
         let window = UIWindow(windowScene: scene)
-        let filmsVC = FilmsTableViewController()
-        let navController = UINavigationController(rootViewController: filmsVC)
         window.rootViewController = navController
         window.makeKeyAndVisible()
         self.window = window
