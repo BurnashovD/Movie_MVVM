@@ -11,5 +11,4 @@ protocol NetworkServicable {
     )
     func fetchActors(id: String, _ completion: @escaping (Result<[Actor], Error>) -> Void)
     func fetchTrailers(id: String, _ completion: @escaping (Result<[Trailer], Error>) -> Void)
-    func fetchImage(_ url: String, _ completion: @escaping (Result<Data, Error>) -> Void)
 }

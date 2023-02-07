@@ -3,15 +3,11 @@
 
 import UIKit
 
+/// Расширение для получения изображений
 extension UIImageView {
     func fetchImage(_ url: String) {
-        NetworkService().fetchImage(url) { [weak self] result in
-            switch result {
-            case let .success(data):
-                self?.image = UIImage(data: data)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
+        ImageService().fetchImage(url) { data in
+            self.image = UIImage(data: data)
         }
     }
 }

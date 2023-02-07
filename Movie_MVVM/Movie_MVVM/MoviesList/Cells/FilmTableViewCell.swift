@@ -114,9 +114,9 @@ final class FilmTableViewCell: UITableViewCell {
     }
 
     private func configureLoadingCell() {
-        filmImageView.image = UIImage(systemName: "person")
-        filmNameLabel.text = "Loading..."
-        filmOverviewLabel.text = "Please wait some more time"
+        filmImageView.image = UIImage(systemName: Constants.loadingImageName)
+        filmNameLabel.text = Constants.loadingText
+        filmOverviewLabel.text = Constants.moreTimeText
     }
 
     private func configUI() {
@@ -177,5 +177,8 @@ extension FilmTableViewCell {
         static let cellViewColorName = "cellViewColor"
         static let blueViewColorName = "blueView"
         static let imageURLString = "http://image.tmdb.org/t/p/w500"
+        static let loadingText = "Loading..."
+        static let moreTimeText = "Please wait some more time"
+        static let loadingImageName = "questionmark.app"
     }
 }

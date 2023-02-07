@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Кастомный NavigationController
+/// Основной навигейшн
 final class MainNavigationController: UINavigationController {
     // MARK: - LifeCycle
 
@@ -23,7 +23,7 @@ final class MainNavigationController: UINavigationController {
     }
 }
 
-/// Constants
+/// Константы
 private extension MainNavigationController {
     enum Constants {
         static let filmCellIdentifier = "film"

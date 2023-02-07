@@ -25,6 +25,12 @@
 		A538D52429911EBC0013CE0B /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A538D51029911EBC0013CE0B /* FilmTableViewCell.swift */; };
 		A538D52529911EBC0013CE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A538D51129911EBC0013CE0B /* Assets.xcassets */; };
 		A538D52829911EBC0013CE0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A538D51729911EBC0013CE0B /* AppDelegate.swift */; };
+		A5968592299261330077298C /* ImageAPIServicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5968591299261330077298C /* ImageAPIServicable.swift */; };
+		A5968594299261420077298C /* ImageAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5968593299261420077298C /* ImageAPIService.swift */; };
+		A5968596299261600077298C /* ProxyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5968595299261600077298C /* ProxyProtocol.swift */; };
+		A5968598299261670077298C /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5968597299261670077298C /* Proxy.swift */; };
+		A596859A299265860077298C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5968599299265860077298C /* ImageService.swift */; };
+		A596859C299265910077298C /* ImageServicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A596859B299265910077298C /* ImageServicable.swift */; };
 		A5ABFE6029912647005858FB /* ActorResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABFE5F29912647005858FB /* ActorResults.swift */; };
 		A5ABFE622991265B005858FB /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABFE612991265B005858FB /* Actor.swift */; };
 		A5ABFE642991266E005858FB /* TrailerResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABFE632991266E005858FB /* TrailerResults.swift */; };
@@ -92,6 +98,12 @@
 		A538D51029911EBC0013CE0B /* FilmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTableViewCell.swift; sourceTree = "<group>"; };
 		A538D51129911EBC0013CE0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A538D51729911EBC0013CE0B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A5968591299261330077298C /* ImageAPIServicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIServicable.swift; sourceTree = "<group>"; };
+		A5968593299261420077298C /* ImageAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIService.swift; sourceTree = "<group>"; };
+		A5968595299261600077298C /* ProxyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyProtocol.swift; sourceTree = "<group>"; };
+		A5968597299261670077298C /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
+		A5968599299265860077298C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		A596859B299265910077298C /* ImageServicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServicable.swift; sourceTree = "<group>"; };
 		A5ABFE5F29912647005858FB /* ActorResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorResults.swift; sourceTree = "<group>"; };
 		A5ABFE612991265B005858FB /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		A5ABFE632991266E005858FB /* TrailerResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerResults.swift; sourceTree = "<group>"; };
@@ -209,9 +221,7 @@
 				A538D50329911EBC0013CE0B /* FilmInfoTableViewController.swift */,
 				A5ABFE842991A2CA005858FB /* FilmInfoViewModelProtocol.swift */,
 				A5ABFE862991A30C005858FB /* FilmInfoViewModel.swift */,
-				A538D50629911EBC0013CE0B /* ActorsTableViewCell.swift */,
-				A538D50729911EBC0013CE0B /* ActorsCollectionViewCell.swift */,
-				A538D50829911EBC0013CE0B /* OverviewTableViewCell.swift */,
+				A596858F29925C500077298C /* Cells */,
 			);
 			path = FilmInfo;
 			sourceTree = "<group>";
@@ -223,10 +233,40 @@
 				A5ABFE7A29915DD9005858FB /* ViewData.swift */,
 				A5ABFE7C29915E52005858FB /* FilmsViewModelProtocol.swift */,
 				A5ABFE8229918784005858FB /* FilmsViewModel.swift */,
+				A596858E29925C400077298C /* Cells */,
+			);
+			path = MoviesList;
+			sourceTree = "<group>";
+		};
+		A596858E29925C400077298C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				A538D50F29911EBC0013CE0B /* FilterTableViewCell.swift */,
 				A538D51029911EBC0013CE0B /* FilmTableViewCell.swift */,
 			);
-			path = MoviesList;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A596858F29925C500077298C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A538D50629911EBC0013CE0B /* ActorsTableViewCell.swift */,
+				A538D50729911EBC0013CE0B /* ActorsCollectionViewCell.swift */,
+				A538D50829911EBC0013CE0B /* OverviewTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A59685902992611D0077298C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				A5ABFE6D29913ED5005858FB /* NetworkServicable.swift */,
+				A5ABFE7129913F77005858FB /* ParceServicable.swift */,
+				A5968591299261330077298C /* ImageAPIServicable.swift */,
+				A596859B299265910077298C /* ImageServicable.swift */,
+				A5968595299261600077298C /* ProxyProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A5ABFE5E299124F4005858FB /* Models */ = {
@@ -269,10 +309,12 @@
 		A5ABFE6C29913EC3005858FB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				A5ABFE6D29913ED5005858FB /* NetworkServicable.swift */,
+				A59685902992611D0077298C /* Protocols */,
 				A5ABFE6F29913EDC005858FB /* NetworkService.swift */,
-				A5ABFE7129913F77005858FB /* ParceServicable.swift */,
+				A5968593299261420077298C /* ImageAPIService.swift */,
+				A5968599299265860077298C /* ImageService.swift */,
 				A5ABFE7329913F7E005858FB /* ParceService.swift */,
+				A5968597299261670077298C /* Proxy.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -470,17 +512,21 @@
 				A5B8098C2991C1E100C1DFCB /* SecondCoordinatorProtocol.swift in Sources */,
 				A5ABFE6E29913ED5005858FB /* NetworkServicable.swift in Sources */,
 				A5B8098E2991C23000C1DFCB /* MainCoordinator.swift in Sources */,
+				A5968598299261670077298C /* Proxy.swift in Sources */,
 				A538D4D929911DC60013CE0B /* Movie_MVVM.xcdatamodeld in Sources */,
 				A5ABFE7429913F7E005858FB /* ParceService.swift in Sources */,
 				A5B809952991C9AC00C1DFCB /* TrailerViewModel.swift in Sources */,
+				A596859A299265860077298C /* ImageService.swift in Sources */,
 				A5ABFE8129918669005858FB /* MainNavigationController.swift in Sources */,
 				A538D52829911EBC0013CE0B /* AppDelegate.swift in Sources */,
 				A5ABFE7229913F77005858FB /* ParceServicable.swift in Sources */,
 				A5ABFE7729915CE5005858FB /* BuilderProtocol.swift in Sources */,
+				A596859C299265910077298C /* ImageServicable.swift in Sources */,
 				A5ABFE852991A2CA005858FB /* FilmInfoViewModelProtocol.swift in Sources */,
 				A538D51929911EBC0013CE0B /* FilmInfoTableViewController.swift in Sources */,
 				A5ABFE7D29915E52005858FB /* FilmsViewModelProtocol.swift in Sources */,
 				A538D51829911EBC0013CE0B /* SceneDelegate.swift in Sources */,
+				A5968596299261600077298C /* ProxyProtocol.swift in Sources */,
 				A5B8098A2991C1C700C1DFCB /* Coordinatable.swift in Sources */,
 				A5ABFE662991267A005858FB /* Trailer.swift in Sources */,
 				A5ABFE872991A30C005858FB /* FilmInfoViewModel.swift in Sources */,
@@ -488,7 +534,9 @@
 				A5ABFE6029912647005858FB /* ActorResults.swift in Sources */,
 				A5ABFE642991266E005858FB /* TrailerResults.swift in Sources */,
 				A538D51B29911EBC0013CE0B /* TrailerWebPageViewController.swift in Sources */,
+				A5968592299261330077298C /* ImageAPIServicable.swift in Sources */,
 				A5ABFE7029913EDC005858FB /* NetworkService.swift in Sources */,
+				A5968594299261420077298C /* ImageAPIService.swift in Sources */,
 				A5ABFE7929915D69005858FB /* ModulBuilder.swift in Sources */,
 				A538D51A29911EBC0013CE0B /* TrailerTableViewCell.swift in Sources */,
 				A5B809932991C9A000C1DFCB /* TrailerViewModelProtocol.swift in Sources */,

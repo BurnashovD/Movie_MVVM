@@ -3,14 +3,12 @@
 
 import Foundation
 
+/// Ответ сервера с фильмами
 struct MovieResults: Decodable {
-    let page: Int
+    /// Массив фильмов
     let results: [Movie]
-    let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
-        case page, results
-        case totalPages = "total_pages"
-        case totalResults = "total_results"
+        case results
     }
 }

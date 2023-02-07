@@ -3,9 +3,13 @@
 
 import Foundation
 
+/// Актер
 struct Actor: Decodable {
+    /// Идентификатор
     let id: Int
+    /// Имя
     let originalName: String
+    /// Фото
     let profilePath: String?
 
     enum CodingKeys: String, CodingKey {

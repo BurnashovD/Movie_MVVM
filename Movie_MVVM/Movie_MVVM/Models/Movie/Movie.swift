@@ -3,13 +3,21 @@
 
 import UIKit
 
+/// Фильм
 struct Movie: Decodable {
+    /// Изображение к фильму
     let backdropPath: String
+    /// Идентификатор
     let id: Int
+    /// Описание к фильму
     let overview: String
+    /// Постер к фильму и название фильма
     let posterPath, title: String
+    /// Оценка
     let voteAverage: Double
+    /// Изображение выбранного фильма
     var filmImage: UIImage
+    /// Идентификатор выбранного фильма
     let currentFilmId: String
 
     enum CodingKeys: String, CodingKey {

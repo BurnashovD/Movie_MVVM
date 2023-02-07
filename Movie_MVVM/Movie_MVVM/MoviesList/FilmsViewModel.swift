@@ -8,6 +8,7 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     // MARK: - Private properties
 
     private let networkService: NetworkServicable
+    private let imageService: ImageServicable
     private let coordinator: Coordinatable
 
     // MARK: - Public properties
@@ -16,10 +17,11 @@ final class FilmsViewModel: FilmsViewModelProtocol {
 
     // MARK: - init
 
-    init(networkService: NetworkServicable, coordinator: Coordinatable) {
+    init(networkService: NetworkServicable, imageService: ImageServicable, coordinator: Coordinatable) {
         updateHandler?(.initial)
         self.networkService = networkService
         self.coordinator = coordinator
+        self.imageService = imageService
     }
 
     // MARK: - Public methods

@@ -3,11 +3,19 @@
 
 import UIKit
 
+/// Сборщик модулей
 final class ModulBuilder: BuilderProtocol {
+    // MARK: - Public methods
+
     func makeFilmsModule(coordinator: Coordinatable) -> UITableViewController {
         let view = FilmsTableViewController()
         let networkService = NetworkService()
-        let viewModel = FilmsViewModel(networkService: networkService, coordinator: coordinator)
+        let imageService = ImageService()
+        let viewModel = FilmsViewModel(
+            networkService: networkService,
+            imageService: imageService,
+            coordinator: coordinator
+        )
         view.viewModel = viewModel
         return view
     }
@@ -15,7 +23,13 @@ final class ModulBuilder: BuilderProtocol {
     func makeFilmInfoModule(coordinator: SecondCoordinatorProtocol, movie: Movie) -> UITableViewController {
         let view = FilmInfoTableViewController()
         let networkService = NetworkService()
-        let viewModel = FilmInfoViewModel(networkService: networkService, movie: movie, coordinator: coordinator)
+        let imageService = ImageService()
+        let viewModel = FilmInfoViewModel(
+            networkService: networkService,
+            imageService: imageService,
+            movie: movie,
+            coordinator: coordinator
+        )
         view.viewModel = viewModel
         view.title = movie.title
         return view

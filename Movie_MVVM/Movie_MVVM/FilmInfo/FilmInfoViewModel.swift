@@ -8,6 +8,7 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     // MARK: - Private properties
 
     private var networkService: NetworkServicable
+    private var imageService: ImageServicable
     private var coordinator: SecondCoordinatorProtocol
 
     // MARK: - Public properties
@@ -18,10 +19,16 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
 
     // MARK: - init
 
-    init(networkService: NetworkServicable, movie: Movie?, coordinator: SecondCoordinatorProtocol) {
+    init(
+        networkService: NetworkServicable,
+        imageService: ImageServicable,
+        movie: Movie?,
+        coordinator: SecondCoordinatorProtocol
+    ) {
         self.networkService = networkService
         self.movie = movie
         self.coordinator = coordinator
+        self.imageService = imageService
     }
 
     // MARK: - Public methods

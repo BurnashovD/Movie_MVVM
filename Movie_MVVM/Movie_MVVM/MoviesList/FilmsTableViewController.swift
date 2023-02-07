@@ -15,7 +15,9 @@ final class FilmsTableViewController: UITableViewController {
     var viewModel: FilmsViewModelProtocol?
     var viewData: ViewData = .initial {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 

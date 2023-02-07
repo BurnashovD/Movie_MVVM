@@ -11,7 +11,7 @@ struct NetworkService: NetworkServicable {
         let session = URLSession.shared
         guard let url =
             URL(
-                string: "\(Constants.baseURL)\(parameter.path)?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
+                string: "\(Constants.baseURL)\(parameter.path)\(Constants.filmsListAPIKey)"
             )
         else { return }
         session.dataTask(with: URLRequest(url: url)) { data, _, error in
@@ -66,22 +66,9 @@ struct NetworkService: NetworkServicable {
         }
         .resume()
     }
-
-    func fetchImage(_ url: String, _ completion: @escaping (Result<Data, Error>) -> Void) {
-        let imageURL = "\(Constants.filmCellImageURLString)\(url)"
-        guard let url = URL(string: imageURL) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
-
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                completion(.success(data))
-            }
-        }
-        .resume()
-    }
 }
 
-/// Константы
+/// Константы и типы параметров
 extension NetworkService {
     enum Constants {
         static let baseURL = "https://api.themoviedb.org/3/movie/"
@@ -96,6 +83,7 @@ extension NetworkService {
         static let actorsEndURLString = "/credits?api_key=56c45ba32cd76399770966658bf65ca0&language=en-US"
         static let trailerEndURLString = "/videos?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU"
         static let filmCellImageURLString = "http://image.tmdb.org/t/p/w500"
+        static let filmsListAPIKey = "?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
     }
 
     enum ParameterType {
