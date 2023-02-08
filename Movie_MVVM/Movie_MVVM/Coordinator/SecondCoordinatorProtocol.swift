@@ -1,5 +1,5 @@
 // SecondCoordinatorProtocol.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -9,6 +9,5 @@ protocol SecondCoordinatorProtocol: Coordinatable {
     var builder: BuilderProtocol { get set }
     var movie: Movie { get set }
     func didFinish()
-    func goForward(movie: Movie)
     func openWeb(_ trailer: Trailer)
 }

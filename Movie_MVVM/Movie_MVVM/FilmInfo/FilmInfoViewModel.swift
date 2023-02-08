@@ -1,21 +1,23 @@
 // FilmInfoViewModel.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import Foundation
 
 /// Вью модель экрана с информацией о выбранном фильме
 final class FilmInfoViewModel: FilmInfoViewModelProtocol {
+    // MARK: - Public properties
+
+    var movie: Movie?
+    var trailers: [Trailer] = []
+    var actors: [Actor] = []
+    var updateHandler: (() -> Void)?
+    var errorHandler: ((Error) -> Void)?
+
     // MARK: - Private properties
 
     private var networkService: NetworkServicable
     private var imageService: ImageServicable
     private var coordinator: SecondCoordinatorProtocol
-
-    // MARK: - Public properties
-
-    var updateActorsHandler: (([Actor]) -> Void)?
-    var updateTrailersHandler: (([Trailer]) -> Void)?
-    var movie: Movie?
 
     // MARK: - init
 
@@ -39,9 +41,10 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(actors):
-                self.updateActorsHandler?(actors)
+                self.actors = actors
+                self.updateHandler?()
             case let .failure(error):
-                print(error.localizedDescription)
+                self.errorHandler?(error)
             }
         }
     }
@@ -60,9 +63,9 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(trailers):
-                self.updateTrailersHandler?(trailers)
+                self.trailers = trailers
             case let .failure(error):
-                print(error.localizedDescription)
+                self.errorHandler?(error)
             }
         }
     }

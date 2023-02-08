@@ -1,5 +1,5 @@
 // FilmInfoTableViewController.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -8,13 +8,6 @@ final class FilmInfoTableViewController: UITableViewController {
     // MARK: - Private properties
 
     private let cellTypes: [CellTypes] = [.images, .overview, .actors]
-    private var trailers = [Trailer]()
-    private var actors: [Actor] = []
-    private var movie: Movie? {
-        willSet {
-            tableView.reloadData()
-        }
-    }
 
     // MARK: - Public properties
 
@@ -27,8 +20,7 @@ final class FilmInfoTableViewController: UITableViewController {
         configUI()
         viewModel?.fetchActors()
         viewModel?.fetchTrailers()
-        updateActorsData()
-        updateTrailersData()
+        bind()
     }
 
     // MARK: - Public methods
@@ -51,20 +43,16 @@ final class FilmInfoTableViewController: UITableViewController {
         configCell()
     }
 
-    private func updateActorsData() {
-        viewModel?.updateActorsHandler = { [weak self] viewData in
+    private func bind() {
+        viewModel?.updateHandler = { [weak self] in
             guard let self = self else { return }
-            self.actors = viewData
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
-    }
 
-    private func updateTrailersData() {
-        viewModel?.updateTrailersHandler = { [weak self] viewData in
-            guard let self = self else { return }
-            self.trailers = viewData
+        viewModel?.errorHandler = { error in
+            print(error.localizedDescription)
         }
     }
 
@@ -122,8 +110,9 @@ extension FilmInfoTableViewController {
             cell.configure(movie)
 
             cell.openWebHandler = { [weak self] in
-                guard let self = self, self.trailers.first != nil else { return }
-                let trailer = self.trailers[indexPath.section]
+                guard let self = self, self.viewModel?.trailers.first != nil,
+                      let trailer = self.viewModel?.trailers[indexPath.section] else { return }
+
                 self.viewModel?.openTrailerWebViewAction(trailer)
             }
             return cell
@@ -144,9 +133,9 @@ extension FilmInfoTableViewController {
                 let cell = tableView.dequeueReusableCell(
                     withIdentifier: Constants.actorsCellIdentifier,
                     for: indexPath
-                ) as? ActorsTableViewCell, !actors.isEmpty
+                ) as? ActorsTableViewCell, let vmActors = viewModel?.actors, !vmActors.isEmpty
             else { return UITableViewCell() }
-            cell.configure(actors: actors)
+            cell.configure(actors: vmActors)
 
             return cell
         }

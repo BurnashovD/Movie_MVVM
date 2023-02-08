@@ -1,5 +1,5 @@
 // FilmTableViewCell.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -58,24 +58,22 @@ final class FilmTableViewCell: UITableViewCell {
         return label
     }()
 
-    // MARK: - Private properties
-
-    private var filmId = ""
-    private var backdropImageId = ""
-
     // MARK: - Public properties
 
     var movie: Movie?
     var viewData: ViewData = .initial
 
-    // MARK: - Public properties
+    // MARK: - Private properties
+
+    private var filmId = ""
+    private var backdropImageId = ""
+
+    // MARK: - Public methods
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         configUI()
     }
-
-    // MARK: - Private methods
 
     func createCurrentMovie() {
         movie = Movie(
@@ -108,10 +106,17 @@ final class FilmTableViewCell: UITableViewCell {
             configureLoadingCell()
         case let .success(movie):
             configure(movie[index])
-        case let .failure(error):
-            print(error.localizedDescription)
+        case .failure:
+            errorConfigure()
         }
     }
+
+    func errorConfigure() {
+        filmNameLabel.text = Constants.errorText
+        filmImageView.image = UIImage(systemName: Constants.errorImageName)
+    }
+
+    // MARK: - Private methods
 
     private func configureLoadingCell() {
         filmImageView.image = UIImage(systemName: Constants.loadingImageName)
@@ -180,5 +185,7 @@ extension FilmTableViewCell {
         static let loadingText = "Loading..."
         static let moreTimeText = "Please wait some more time"
         static let loadingImageName = "questionmark.app"
+        static let errorText = "Error"
+        static let errorImageName = "iphone.gen2.slash"
     }
 }

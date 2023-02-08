@@ -1,17 +1,17 @@
 // Proxy.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import Foundation
 
 /// Сервис кешировнаия изображений
 struct Proxy: ProxyProtocol {
-    // MARK: - Private properties
-
-    private let imageAPIService = ImageAPIService()
-
     // MARK: - Public properties
 
     var cache = NSCache<NSString, NSData>()
+
+    // MARK: - Private properties
+
+    private let imageAPIService = ImageAPIService()
 
     // MARK: - Public methods
 
@@ -27,6 +27,8 @@ struct Proxy: ProxyProtocol {
         let imageData = Data(referencing: cacheData)
         completion(imageData)
     }
+
+    // MARK: - Private methods
 
     private func fetchImageData(posterPath: String, _ completion: @escaping (NSData) -> Void) {
         imageAPIService.fetchImage(posterPath) { result in

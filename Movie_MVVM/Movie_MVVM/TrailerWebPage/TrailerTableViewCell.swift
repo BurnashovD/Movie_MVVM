@@ -1,5 +1,5 @@
 // TrailerTableViewCell.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -37,16 +37,16 @@ final class TrailerTableViewCell: UITableViewCell {
         return scroll
     }()
 
+    // MARK: - Public properties
+
+    var openWebHandler: (() -> Void)?
+
     // MARK: - Private properties
 
     private lazy var tapFilmImageViewRecognizer = UITapGestureRecognizer(
         target: self,
         action: #selector(openTrailerWebPageAction)
     )
-
-    // MARK: - Public properties
-
-    var openWebHandler: (() -> Void)?
 
     // MARK: - Public methods
 

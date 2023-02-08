@@ -1,5 +1,5 @@
 // Coordinatable.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -9,6 +9,6 @@ protocol Coordinatable: AnyObject {
     var childCoordinators: [Coordinatable] { get set }
     var builder: BuilderProtocol { get set }
     func initial()
-    func goForward(movie: Movie)
+    func addDependency(movie: Movie)
     func childDidFinish(child: Coordinatable)
 }

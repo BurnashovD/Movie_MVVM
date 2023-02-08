@@ -1,12 +1,14 @@
 // FilmInfoViewModelProtocol.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import Foundation
 
 /// Протокол вью модели экрана с информацией о выбранном фильме
 protocol FilmInfoViewModelProtocol {
-    var updateActorsHandler: (([Actor]) -> Void)? { get set }
-    var updateTrailersHandler: (([Trailer]) -> Void)? { get set }
+    var updateHandler: (() -> Void)? { get set }
+    var errorHandler: ((Error) -> Void)? { get set }
+    var trailers: [Trailer] { get set }
+    var actors: [Actor] { get set }
     var movie: Movie? { get set }
     func fetchActors()
     func fetchTrailers()

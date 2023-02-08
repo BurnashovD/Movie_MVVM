@@ -1,5 +1,5 @@
 // SecondCoordinator.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -43,7 +43,7 @@ final class SecondCoordinator: SecondCoordinatorProtocol {
         navigationController.present(webView, animated: true)
     }
 
-    func goForward(movie: Movie) {}
+    func addDependency(movie: Movie) {}
 
     func childDidFinish(child: Coordinatable) {}
 }

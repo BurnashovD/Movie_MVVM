@@ -1,5 +1,5 @@
 // MainCoordinator.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
@@ -25,7 +25,7 @@ final class MainCoordintor: Coordinatable {
         navigationController.pushViewController(filmsVC, animated: true)
     }
 
-    func goForward(movie: Movie) {
+    func addDependency(movie: Movie) {
         let child = SecondCoordinator(
             navigationController: navigationController,
             builder: builder,

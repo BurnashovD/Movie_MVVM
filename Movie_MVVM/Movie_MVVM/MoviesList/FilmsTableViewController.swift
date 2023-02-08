@@ -1,15 +1,10 @@
 // FilmsTableViewController.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
 /// Экран списка фильмов
 final class FilmsTableViewController: UITableViewController {
-    // MARK: - Private properties
-
-    private var actualFilter: NetworkService.ParameterType = .topRated
-    private var cellTypes: [CellTypes] = [.filters, .films]
-
     // MARK: - Public properties
 
     var viewModel: FilmsViewModelProtocol?
@@ -20,6 +15,11 @@ final class FilmsTableViewController: UITableViewController {
             }
         }
     }
+
+    // MARK: - Private properties
+
+    private var actualFilter: NetworkService.ParameterType = .topRated
+    private var cellTypes: [CellTypes] = [.filters, .films]
 
     // MARK: - LifeCycle
 
@@ -49,19 +49,6 @@ final class FilmsTableViewController: UITableViewController {
         tableView.register(FilmTableViewCell.self, forCellReuseIdentifier: Constants.filmCellIdentifier)
         tableView.register(FilterTableViewCell.self, forCellReuseIdentifier: Constants.filterCellIdentifier)
         tableView.showsVerticalScrollIndicator = false
-    }
-
-    private func moviesCount() -> Int {
-        switch viewData {
-        case .initial:
-            return 0
-        case .loading:
-            return 1
-        case let .success(movies):
-            return movies.count
-        case .failure:
-            return 0
-        }
     }
 }
 
@@ -94,7 +81,8 @@ extension FilmsTableViewController {
         case .filters:
             return 1
         case .films:
-            return moviesCount()
+            guard let viewModel = viewModel else { return 0 }
+            return viewModel.moviesCount()
         }
     }
 
@@ -106,7 +94,8 @@ extension FilmsTableViewController {
                 withIdentifier: Constants.filterCellIdentifier,
                 for: indexPath
             ) as? FilterTableViewCell else { return UITableViewCell() }
-            cell.sendURLHandler = { filter in
+            cell.sendURLHandler = { [weak self] filter in
+                guard let self = self else { return }
                 self.actualFilter = filter
                 self.viewModel?.fetchMovies(self.actualFilter)
             }

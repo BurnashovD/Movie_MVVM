@@ -1,18 +1,18 @@
 // TrailerViewModel.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import Foundation
 import WebKit
 
 /// Вью модель экрана с трейлером к фильму
 final class TrailerViewModel: TrailerViewModelProtocol {
-    // MARK: - Private properties
-
-    private var coordinator: SecondCoordinatorProtocol
-
     // MARK: - Public properties
 
     var trailer: Trailer?
+
+    // MARK: - Private properties
+
+    private var coordinator: SecondCoordinatorProtocol
 
     // MARK: - init
 
