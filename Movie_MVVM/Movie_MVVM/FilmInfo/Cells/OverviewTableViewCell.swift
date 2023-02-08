@@ -1,9 +1,9 @@
 // OverviewTableViewCell.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
-// Класс отвечает за ячейку с описанием к фильму
+/// Ячейка с описанием к фильму
 final class OverviewTableViewCell: UITableViewCell {
     // MARK: - Visual components
 
@@ -26,15 +26,15 @@ final class OverviewTableViewCell: UITableViewCell {
         return label
     }()
 
-    // MARK: - LifeCycle
+    // MARK: - Public methods
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         configUI()
     }
 
-    public func refresh(filmInfo: FilmInfoTableViewController) {
-        overviewLabel.text = filmInfo.selectedFilmOverviewText
+    func configure(movie: Movie) {
+        overviewLabel.text = movie.overview
     }
 
     // MARK: - Private methods
@@ -64,7 +64,7 @@ final class OverviewTableViewCell: UITableViewCell {
     }
 }
 
-/// Constants
+/// Константы
 extension OverviewTableViewCell {
     enum Constants {
         static let blueViewColorName = "blueView"

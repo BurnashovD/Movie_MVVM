@@ -1,9 +1,9 @@
 // FilterTableViewCell.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 import UIKit
 
-// Класс отвечает за ячейку с кнопками фильтра
+/// Ячейка с выбором категории фильмов
 final class FilterTableViewCell: UITableViewCell {
     // MARK: - Visual components
 
@@ -39,19 +39,19 @@ final class FilterTableViewCell: UITableViewCell {
 
     // MARK: - Public properties
 
-    var sendURLClosure: ((String) -> Void)?
+    var sendURLHandler: ((NetworkService.ParameterType) -> Void)?
 
-    // MARK: - LifeCycle
+    // MARK: - Public methods
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         backgroundColor = UIColor(named: Constants.blueViewColorName)
-        configUI()
+        configureUI()
     }
 
     // MARK: - Private methods
 
-    private func configUI() {
+    private func configureUI() {
         selectionStyle = .none
         contentView.addSubview(topRatedButton)
         contentView.addSubview(upcomingButton)
@@ -87,19 +87,19 @@ final class FilterTableViewCell: UITableViewCell {
     }
 
     @objc private func sendTopRatedURLAction() {
-        sendURLClosure?(Constants.topRatedFilmsURLString)
+        sendURLHandler?(.topRated)
     }
 
     @objc private func sendUpcomingdURLAction() {
-        sendURLClosure?(Constants.upcomingFilmsURLString)
+        sendURLHandler?(.upcoming)
     }
 
     @objc private func sendPopularURLAction() {
-        sendURLClosure?(Constants.popularFilmsURLString)
+        sendURLHandler?(.popular)
     }
 }
 
-/// Constants
+/// Константы
 extension FilterTableViewCell {
     enum Constants {
         static let buttonsColorName = "buttonsColor"
@@ -107,11 +107,5 @@ extension FilterTableViewCell {
         static let topRatedText = "Top rated"
         static let upcomingText = "Upcoming"
         static let popularText = "Popular"
-        static let topRatedFilmsURLString =
-            "https://api.themoviedb.org/3/movie/top_rated?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
-        static let upcomingFilmsURLString =
-            "https://api.themoviedb.org/3/movie/upcoming?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
-        static let popularFilmsURLString =
-            "https://api.themoviedb.org/3/movie/popular?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-Ru&page=1"
     }
 }

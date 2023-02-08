@@ -1,5 +1,5 @@
 // Movie_MVVMTests.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © DB. All rights reserved.
 
 @testable import Movie_MVVM
 import XCTest
