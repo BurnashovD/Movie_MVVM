@@ -4,5 +4,6 @@
 import CoreData
 import Foundation
 
+/// Актеры кордаты
 @objc(ActorObject)
 public class ActorObject: NSManagedObject {}

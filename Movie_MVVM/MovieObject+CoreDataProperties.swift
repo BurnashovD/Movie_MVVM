@@ -4,18 +4,27 @@
 import CoreData
 import Foundation
 
+/// Расширение с свойствами фильма кордаты
 public extension MovieObject {
     @nonobjc class func fetchRequest() -> NSFetchRequest<MovieObject> {
         NSFetchRequest<MovieObject>(entityName: "MovieObject")
     }
 
+    /// Изображение фильма
     @NSManaged var backdropPath: String?
+    /// Фильтер
     @NSManaged var filter: String?
+    /// Идентификатор
     @NSManaged var id: Int64
+    /// Описание
     @NSManaged var overview: String?
+    /// Дополнительное изображение
     @NSManaged var posterPath: String?
+    /// Название
     @NSManaged var title: String?
+    /// Оценка
     @NSManaged var voteAvarage: Double
+    /// Актеры
     @NSManaged var actors: Set<ActorObject>?
 }
 
