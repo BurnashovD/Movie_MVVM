@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "keychain-swift?ref=morioh.com&utm_source=morioh.com",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/evgenyneu/keychain-swift?ref=morioh.com&utm_source=morioh.com",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c1fde55798b164cad44b5e23cfa2f0f1ebcd76af"
+      }
+    }
+  ],
+  "version" : 2
+}

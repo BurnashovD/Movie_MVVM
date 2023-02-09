@@ -26,7 +26,8 @@ final class FilmsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        viewModel?.fetchMovies(actualFilter)
+        callApiAlertAction()
+//        viewModel?.fetchMovies(actualFilter)
         viewModel?.loadMovies(actualFilter)
         updateViewData()
     }
@@ -51,6 +52,24 @@ final class FilmsTableViewController: UITableViewController {
         tableView.register(FilterTableViewCell.self, forCellReuseIdentifier: Constants.filterCellIdentifier)
         tableView.showsVerticalScrollIndicator = false
     }
+
+    private func callApiAlertAction() {
+        viewModel?.apiKeyCheckAction({
+            let alert = UIAlertController(
+                title: Constants.setApiAlertTitle,
+                message: nil,
+                preferredStyle: .alert
+            )
+            alert.addTextField()
+
+            let action = UIAlertAction(title: Constants.setText, style: .default) { [weak self] _ in
+                guard let self = self, let key = alert.textFields?.first?.text else { return }
+                self.viewModel?.saveApiKeyAction(key, filter: self.actualFilter)
+            }
+            alert.addAction(action)
+            present(alert, animated: true)
+        }, filter: actualFilter)
+    }
 }
 
 /// Константы и типы ячеек
@@ -60,7 +79,9 @@ extension FilmsTableViewController {
         static let filterCellIdentifier = "filter"
         static let blueViewColorName = "blueView"
         static let filmsText = "Фильмы"
+        static let setApiAlertTitle = "Set API Key"
         static let errorText = "Error: "
+        static let setText = "Set"
     }
 
     enum CellTypes {
@@ -98,7 +119,6 @@ extension FilmsTableViewController {
             cell.sendURLHandler = { [weak self] filter in
                 guard let self = self else { return }
                 self.actualFilter = filter
-//                self.viewModel?.fetchMovies(self.actualFilter)
                 self.viewModel?.loadMovies(self.actualFilter)
             }
 

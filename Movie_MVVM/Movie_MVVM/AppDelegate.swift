@@ -10,12 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        print(
-            "Documents Directory: ",
-            FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!"
-        )
         // Override point for customization after application launch.
-        return true
+        true
     }
 
     // MARK: UISceneSession Lifecycle

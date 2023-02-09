@@ -12,4 +12,6 @@ protocol FilmsViewModelProtocol {
     func loadMovies(_ filter: NetworkService.ParameterType)
     func moviesCount() -> Int
     func selectedRowAction(tableView: UITableView, selectedCell: IndexPath?)
+    func apiKeyCheckAction(_ completion: () -> Void, filter: NetworkService.ParameterType)
+    func saveApiKeyAction(_ key: String, filter: NetworkService.ParameterType)
 }

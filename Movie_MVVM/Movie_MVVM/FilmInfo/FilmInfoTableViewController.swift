@@ -18,7 +18,7 @@ final class FilmInfoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
-        viewModel?.fetchActors()
+        viewModel?.loadActors()
         viewModel?.fetchTrailers()
         bind()
     }

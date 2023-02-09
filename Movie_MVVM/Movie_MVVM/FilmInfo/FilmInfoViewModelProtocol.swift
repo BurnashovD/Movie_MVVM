@@ -14,4 +14,5 @@ protocol FilmInfoViewModelProtocol {
     func fetchTrailers()
     func viewDidDisapeardAction()
     func openTrailerWebViewAction(_ trailer: Trailer)
+    func loadActors()
 }

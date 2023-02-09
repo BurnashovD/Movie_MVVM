@@ -47,7 +47,11 @@ final class ActorsCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(_ actor: Actor) {
-        guard let path = actor.profilePath else { return }
+        guard let path = actor.profilePath else {
+            actorNameLabel.text = actor.originalName
+            actorImageView.image = UIImage(named: Constants.actorDefaultImageName)
+            return
+        }
         actorNameLabel.text = actor.originalName
         actorImageView.fetchImage(path)
     }
@@ -75,5 +79,6 @@ extension ActorsCollectionViewCell {
         static let errorText = "init(coder:) has not been implemented"
         static let imageURLString = "http://image.tmdb.org/t/p/w500"
         static let blueViewColorname = "blueView"
+        static let actorDefaultImageName = "unknown"
     }
 }

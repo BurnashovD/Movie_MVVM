@@ -4,15 +4,18 @@
 import CoreData
 import UIKit
 
-struct CoreDataService: CoreDataProtocol {
+/// Сервис сохранения данных в базу данных
+struct CoreDataService: CoreDataServiceProtocol {
+    // MARK: - Public methods
+
     func saveMovies(_ movies: [Movie]) {
         guard
             let context = createContext(),
-            let entity = NSEntityDescription.entity(forEntityName: "MovieObject", in: context)
+            let entity = NSEntityDescription.entity(forEntityName: Constants.movieEntityName, in: context)
         else { return }
         do {
             try movies.forEach { movie in
-                deleteObjects(Int64(movie.id))
+                deleteMovieObjects(Int64(movie.id))
                 let object = MovieObject(entity: entity, insertInto: context)
                 object.id = Int64(movie.id)
                 object.posterPath = movie.posterPath
@@ -32,55 +35,56 @@ struct CoreDataService: CoreDataProtocol {
     func saveActors(_ actors: [Actor], id: Int) {
         guard
             let context = createContext(),
-            let entity = NSEntityDescription.entity(forEntityName: "ActorObject", in: context)
+            let entity = NSEntityDescription.entity(forEntityName: Constants.actorEntityName, in: context)
         else { return }
         let fetch = MovieObject.fetchRequest()
         let selectedMovie = try? context.fetch(fetch).first(where: { $0.id == id })
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "ActorObject")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        var actorsSet = Set<ActorObject>()
         do {
-            try? context.execute(deleteRequest)
-            try? actors.forEach { actor in
+            actors.forEach { actor in
+                deleteActorObjects(actor.originalName)
                 let actorObject = ActorObject(entity: entity, insertInto: context)
                 actorObject.id = Int64(actor.id)
                 actorObject.originalName = actor.originalName
                 actorObject.posterPath = actor.profilePath
-
-//                selectedMovie?.actors?.append(actorObject)
-                try? context.save()
+                actorObject.order = Int64(actor.order)
+                actorsSet.insert(actorObject)
             }
+            selectedMovie?.actors = actorsSet
+            try? context.save()
         }
     }
 
-    func getActors(_ id: Int) {
-        guard
-            let delegate = UIApplication.shared.delegate as? AppDelegate
-        else { return }
-        let context = delegate.persistentContainer.viewContext
-//        let context = createContext()
+    func getActors(_ id: Int) -> [Actor]? {
+        guard let context = createContext() else { return nil }
         let fetch = MovieObject.fetchRequest()
         let selectedMovie = try? context.fetch(fetch).first(where: { $0.id == id })
-//        print("documents\(selectedMovie?.actors?.count)")
+        var actors: [Actor] = []
+        do {
+            selectedMovie?.actors?.forEach { object in
+                guard let actor = convertActorObject(object) else { return }
+                actors.append(actor)
+            }
+            actors.sort(by: { $0.order < $1.order })
+            return actors
+        }
     }
 
     func getMovies(parameter: NetworkService.ParameterType) -> [Movie]? {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "MovieObject")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         let fetch = MovieObject.fetchRequest()
         let context = createContext()
         var movies: [Movie] = []
         var moviesObjects: [MovieObject]? = []
         do {
-//            try context?.execute(deleteRequest)
             if parameter == .popular {
-                moviesObjects = try context?.fetch(fetch).filter { $0.filter == "popular" }
+                moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.popularFilterName }
             } else if parameter == .topRated {
-                moviesObjects = try context?.fetch(fetch).filter { $0.filter == "topRated" }
+                moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.topRatedFilterName }
             } else if parameter == .upcoming {
-                moviesObjects = try context?.fetch(fetch).filter { $0.filter == "upcoming" }
+                moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.upcomingFilterName }
             }
-            moviesObjects?.forEach { obj in
-                guard let convertedMovie = convertMovieObject(obj) else { return }
+            moviesObjects?.forEach { object in
+                guard let convertedMovie = convertMovieObject(object) else { return }
                 movies.append(convertedMovie)
             }
             return movies
@@ -90,7 +94,9 @@ struct CoreDataService: CoreDataProtocol {
         }
     }
 
-    private func deleteObjects(_ id: Int64) {
+    // MARK: - Private methods
+
+    private func deleteMovieObjects(_ id: Int64) {
         let fetch = MovieObject.fetchRequest()
         let context = createContext()
         let result = try? context?.fetch(fetch).filter { $0.id == id }
@@ -99,8 +105,22 @@ struct CoreDataService: CoreDataProtocol {
         }
     }
 
+    private func deleteActorObjects(_ name: String) {
+        let fetch = ActorObject.fetchRequest()
+        let context = createContext()
+        let result = try? context?.fetch(fetch).filter { $0.originalName == name }
+        result?.forEach { object in
+            context?.delete(object)
+        }
+    }
+
     private func convertActorObject(_ actor: ActorObject) -> Actor? {
-        let actor = Actor(id: Int(actor.id), originalName: actor.originalName ?? "", profilePath: actor.posterPath)
+        let actor = Actor(
+            id: Int(actor.id),
+            originalName: actor.originalName ?? "",
+            profilePath: actor.posterPath,
+            order: Int(actor.order)
+        )
         return actor
     }
 
@@ -124,7 +144,17 @@ struct CoreDataService: CoreDataProtocol {
             let delegate = UIApplication.shared.delegate as? AppDelegate
         else { return nil }
         let context = delegate.persistentContainer.viewContext
-        context.mergePolicy = NSOverwriteMergePolicy
         return context
+    }
+}
+
+/// Константы
+private extension CoreDataService {
+    enum Constants {
+        static let movieEntityName = "MovieObject"
+        static let actorEntityName = "ActorObject"
+        static let popularFilterName = "popular"
+        static let upcomingFilterName = "upcoming"
+        static let topRatedFilterName = "topRated"
     }
 }
