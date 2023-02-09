@@ -63,6 +63,7 @@
 		A5D07A6D2995068800651C87 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A5D07A6C2995068800651C87 /* KeychainSwift */; };
 		A5D07A6F299506AA00651C87 /* KeyChainServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07A6E299506AA00651C87 /* KeyChainServiceProtocol.swift */; };
 		A5D07A71299506B300651C87 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07A70299506B300651C87 /* KeyChainService.swift */; };
+		A5D07A732995B84100651C87 /* UITableViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07A722995B84100651C87 /* UITableViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		A5B809942991C9AC00C1DFCB /* TrailerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewModel.swift; sourceTree = "<group>"; };
 		A5D07A6E299506AA00651C87 /* KeyChainServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainServiceProtocol.swift; sourceTree = "<group>"; };
 		A5D07A70299506B300651C87 /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
+		A5D07A722995B84100651C87 /* UITableViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 				A5ABFE5E299124F4005858FB /* Models */,
 				A5ABFE7529915CC1005858FB /* Builder */,
 				A5ABFE7E299184C7005858FB /* UIImageView+Extension.swift */,
+				A5D07A722995B84100651C87 /* UITableViewController+Extension.swift */,
 				A5ABFE8029918668005858FB /* MainNavigationController.swift */,
 				A538D50C29911EBC0013CE0B /* Info.plist */,
 				A538D51129911EBC0013CE0B /* Assets.xcassets */,
@@ -556,6 +559,7 @@
 				A5ABFE852991A2CA005858FB /* FilmInfoViewModelProtocol.swift in Sources */,
 				A538D51929911EBC0013CE0B /* FilmInfoTableViewController.swift in Sources */,
 				A5ABFE7D29915E52005858FB /* FilmsViewModelProtocol.swift in Sources */,
+				A5D07A732995B84100651C87 /* UITableViewController+Extension.swift in Sources */,
 				A538D51829911EBC0013CE0B /* SceneDelegate.swift in Sources */,
 				A5968596299261600077298C /* ProxyProtocol.swift in Sources */,
 				A5B8098A2991C1C700C1DFCB /* Coordinatable.swift in Sources */,

@@ -27,7 +27,6 @@ final class FilmsTableViewController: UITableViewController {
         super.viewDidLoad()
         configureUI()
         callApiAlertAction()
-//        viewModel?.fetchMovies(actualFilter)
         viewModel?.loadMovies(actualFilter)
         updateViewData()
     }
@@ -55,19 +54,10 @@ final class FilmsTableViewController: UITableViewController {
 
     private func callApiAlertAction() {
         viewModel?.apiKeyCheckAction({
-            let alert = UIAlertController(
-                title: Constants.setApiAlertTitle,
-                message: nil,
-                preferredStyle: .alert
-            )
-            alert.addTextField()
-
-            let action = UIAlertAction(title: Constants.setText, style: .default) { [weak self] _ in
-                guard let self = self, let key = alert.textFields?.first?.text else { return }
+            callAlert(title: Constants.setApiAlertTitle, actionTitle: Constants.setText) { [weak self] key in
+                guard let self = self else { return }
                 self.viewModel?.saveApiKeyAction(key, filter: self.actualFilter)
             }
-            alert.addAction(action)
-            present(alert, animated: true)
         }, filter: actualFilter)
     }
 }

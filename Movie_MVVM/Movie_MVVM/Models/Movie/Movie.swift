@@ -19,7 +19,7 @@ final class Movie: Decodable {
     var filmImage: UIImage
     /// Идентификатор выбранного фильма
     let currentFilmId: String
-    ///
+    /// Фильтр по категориям
     var filter: String
 
     enum CodingKeys: String, CodingKey {
