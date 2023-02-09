@@ -24,4 +24,10 @@ struct Actor: Decodable {
         originalName = try container.decode(String.self, forKey: .originalName)
         profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
     }
+
+    init(id: Int, originalName: String, profilePath: String?) {
+        self.id = id
+        self.originalName = originalName
+        self.profilePath = profilePath
+    }
 }

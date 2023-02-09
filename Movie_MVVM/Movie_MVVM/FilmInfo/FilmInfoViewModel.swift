@@ -19,6 +19,8 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     private var imageService: ImageServicable
     private var coordinator: SecondCoordinatorProtocol
 
+    private var coreDataService = CoreDataService()
+
     // MARK: - init
 
     init(
@@ -42,6 +44,10 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
             switch result {
             case let .success(actors):
                 self.actors = actors
+                self.coreDataService.saveActors(actors, id: self.movie!.id)
+                print("documents\(self.movie!.id)")
+                self.coreDataService.getActors(self.movie!.id)
+                print("documents\(actors.count)")
                 self.updateHandler?()
             case let .failure(error):
                 self.errorHandler?(error)

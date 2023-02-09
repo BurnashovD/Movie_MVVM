@@ -9,6 +9,7 @@ protocol FilmsViewModelProtocol {
     var errorHandler: ((Error) -> Void)? { get set }
     var viewData: ViewData { get set }
     func fetchMovies(_ filter: NetworkService.ParameterType)
+    func loadMovies(_ filter: NetworkService.ParameterType)
     func moviesCount() -> Int
     func selectedRowAction(tableView: UITableView, selectedCell: IndexPath?)
 }

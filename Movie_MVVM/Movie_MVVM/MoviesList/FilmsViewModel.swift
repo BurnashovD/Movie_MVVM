@@ -17,6 +17,8 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     private let imageService: ImageServicable
     private let coordinator: Coordinatable
 
+    private let coreDataService = CoreDataService()
+
     // MARK: - init
 
     init(networkService: NetworkServicable, imageService: ImageServicable, coordinator: Coordinatable) {
@@ -34,12 +36,31 @@ final class FilmsViewModel: FilmsViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(movies):
+                movies.forEach { film in
+                    if filter == .upcoming {
+                        film.filter = "upcoming"
+                    } else if filter == .topRated {
+                        film.filter = "topRated"
+                    } else if filter == .popular {
+                        film.filter = "popular"
+                    }
+                }
                 self.viewData = .success(movies)
                 self.updateHandler?(.success(movies))
+                self.coreDataService.saveMovies(movies)
             case let .failure(error):
                 self.errorHandler?(error)
             }
         }
+    }
+
+    func loadMovies(_ filter: NetworkService.ParameterType) {
+        guard let coreMovies = coreDataService.getMovies(parameter: filter), !coreMovies.isEmpty else {
+            fetchMovies(filter)
+            return
+        }
+        viewData = .success(coreMovies)
+        updateHandler?(.success(coreMovies))
     }
 
     func moviesCount() -> Int {

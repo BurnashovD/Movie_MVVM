@@ -27,6 +27,7 @@ final class FilmsTableViewController: UITableViewController {
         super.viewDidLoad()
         configureUI()
         viewModel?.fetchMovies(actualFilter)
+        viewModel?.loadMovies(actualFilter)
         updateViewData()
     }
 
@@ -97,7 +98,8 @@ extension FilmsTableViewController {
             cell.sendURLHandler = { [weak self] filter in
                 guard let self = self else { return }
                 self.actualFilter = filter
-                self.viewModel?.fetchMovies(self.actualFilter)
+//                self.viewModel?.fetchMovies(self.actualFilter)
+                self.viewModel?.loadMovies(self.actualFilter)
             }
 
             return cell
