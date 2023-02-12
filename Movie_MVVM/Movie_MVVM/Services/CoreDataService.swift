@@ -76,12 +76,13 @@ struct CoreDataService: CoreDataServiceProtocol {
         var movies: [Movie] = []
         var moviesObjects: [MovieObject]? = []
         do {
-            if parameter == .popular {
+            switch parameter {
+            case .popular:
                 moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.popularFilterName }
-            } else if parameter == .topRated {
-                moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.topRatedFilterName }
-            } else if parameter == .upcoming {
+            case .upcoming:
                 moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.upcomingFilterName }
+            case .topRated:
+                moviesObjects = try context?.fetch(fetch).filter { $0.filter == Constants.topRatedFilterName }
             }
             moviesObjects?.forEach { object in
                 guard let convertedMovie = convertMovieObject(object) else { return }

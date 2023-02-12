@@ -5,7 +5,7 @@ import CoreData
 import Foundation
 
 /// Расширение с свойствами актера кордаты
-public extension ActorObject {
+extension ActorObject {
     @nonobjc class func fetchRequest() -> NSFetchRequest<ActorObject> {
         NSFetchRequest<ActorObject>(entityName: "ActorObject")
     }

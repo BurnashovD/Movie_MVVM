@@ -5,7 +5,7 @@ import CoreData
 import Foundation
 
 /// Расширение с свойствами фильма кордаты
-public extension MovieObject {
+extension MovieObject {
     @nonobjc class func fetchRequest() -> NSFetchRequest<MovieObject> {
         NSFetchRequest<MovieObject>(entityName: "MovieObject")
     }
@@ -30,7 +30,7 @@ public extension MovieObject {
 
 // MARK: Generated accessors for actors
 
-public extension MovieObject {
+extension MovieObject {
     @objc(addActorsObject:)
     @NSManaged func addToActors(_ value: ActorObject)
 

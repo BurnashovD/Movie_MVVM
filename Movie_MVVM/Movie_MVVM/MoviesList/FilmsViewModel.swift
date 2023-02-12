@@ -45,12 +45,13 @@ final class FilmsViewModel: FilmsViewModelProtocol {
             switch result {
             case let .success(movies):
                 movies.forEach { film in
-                    if filter == .upcoming {
-                        film.filter = Constants.upcomingFilmsFilter
-                    } else if filter == .topRated {
-                        film.filter = Constants.topRatedFilmsFilter
-                    } else if filter == .popular {
+                    switch filter {
+                    case .popular:
                         film.filter = Constants.popularFilmsFilter
+                    case .topRated:
+                        film.filter = Constants.topRatedFilmsFilter
+                    case .upcoming:
+                        film.filter = Constants.upcomingFilmsFilter
                     }
                 }
                 self.viewData = .success(movies)

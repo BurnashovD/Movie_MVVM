@@ -40,7 +40,10 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     // MARK: - Public methods
 
     func fetchActors() {
-        guard let id = movie?.currentFilmId, let movieId = movie?.id else { return }
+        guard
+            let id = movie?.currentFilmId,
+            let movieId = movie?.id
+        else { return }
         networkService.fetchActors(id: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -55,7 +58,11 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     }
 
     func loadActors() {
-        guard let id = movie?.id, let coreActors = coreDataService.getActors(id), !coreActors.isEmpty else {
+        guard
+            let id = movie?.id,
+            let coreActors = coreDataService.getActors(id),
+            !coreActors.isEmpty
+        else {
             fetchActors()
             return
         }

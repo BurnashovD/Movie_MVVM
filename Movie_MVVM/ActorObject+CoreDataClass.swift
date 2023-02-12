@@ -6,4 +6,4 @@ import Foundation
 
 /// Актеры кордаты
 @objc(ActorObject)
-public class ActorObject: NSManagedObject {}
+class ActorObject: NSManagedObject {}
