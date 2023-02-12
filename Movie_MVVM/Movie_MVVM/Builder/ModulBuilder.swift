@@ -11,9 +11,9 @@ final class ModulBuilder: BuilderProtocol {
         let view = FilmsTableViewController()
         let keyChainService = KeyChainService()
         let networkService = NetworkService(keyChainService: keyChainService)
-        let proxy = Proxy()
-        let imageService = ImageService(proxy: proxy)
+        let imageService = ImageService()
         let coreDataService = CoreDataService()
+
         let viewModel = FilmsViewModel(
             networkService: networkService,
             imageService: imageService,
@@ -29,8 +29,7 @@ final class ModulBuilder: BuilderProtocol {
         let view = FilmInfoTableViewController()
         let keyChainService = KeyChainService()
         let networkService = NetworkService(keyChainService: keyChainService)
-        let proxy = Proxy()
-        let imageService = ImageService(proxy: proxy)
+        let imageService = ImageService()
         let coreDataService = CoreDataService()
         let viewModel = FilmInfoViewModel(
             networkService: networkService,

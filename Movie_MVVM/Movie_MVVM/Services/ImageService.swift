@@ -8,13 +8,7 @@ final class ImageService: ImageServicable {
     // MARK: - Private properties
 
     private let imageAPIService = ImageAPIService()
-    private let proxy: ProxyProtocol
-
-    // MARK: - init
-
-    init(proxy: ProxyProtocol) {
-        self.proxy = proxy
-    }
+    private let proxy = Proxy()
 
     // MARK: - Public methods
 
