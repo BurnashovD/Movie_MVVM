@@ -16,14 +16,24 @@ final class FilmsViewModel: FilmsViewModelProtocol {
     private let networkService: NetworkServicable
     private let imageService: ImageServicable
     private let coordinator: Coordinatable
+    private let coreDataService: CoreDataServiceProtocol
+    private let keyChainService: KeyChainServiceProtocol
 
     // MARK: - init
 
-    init(networkService: NetworkServicable, imageService: ImageServicable, coordinator: Coordinatable) {
+    init(
+        networkService: NetworkServicable,
+        imageService: ImageServicable,
+        coreDataService: CoreDataServiceProtocol,
+        keyChainService: KeyChainServiceProtocol,
+        coordinator: Coordinatable
+    ) {
         updateHandler?(.initial)
         self.networkService = networkService
         self.coordinator = coordinator
         self.imageService = imageService
+        self.coreDataService = coreDataService
+        self.keyChainService = keyChainService
     }
 
     // MARK: - Public methods
@@ -34,12 +44,32 @@ final class FilmsViewModel: FilmsViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(movies):
+                movies.forEach { film in
+                    switch filter {
+                    case .popular:
+                        film.filter = Constants.popularFilmsFilter
+                    case .topRated:
+                        film.filter = Constants.topRatedFilmsFilter
+                    case .upcoming:
+                        film.filter = Constants.upcomingFilmsFilter
+                    }
+                }
                 self.viewData = .success(movies)
                 self.updateHandler?(.success(movies))
+                self.coreDataService.saveMovies(movies)
             case let .failure(error):
                 self.errorHandler?(error)
             }
         }
+    }
+
+    func loadMovies(_ filter: NetworkService.ParameterType) {
+        guard let coreMovies = coreDataService.getMovies(parameter: filter), !coreMovies.isEmpty else {
+            fetchMovies(filter)
+            return
+        }
+        viewData = .success(coreMovies)
+        updateHandler?(.success(coreMovies))
     }
 
     func moviesCount() -> Int {
@@ -55,6 +85,20 @@ final class FilmsViewModel: FilmsViewModelProtocol {
         }
     }
 
+    func saveApiKeyAction(_ key: String, filter: NetworkService.ParameterType) {
+        UserDefaults.standard.set(true, forKey: Constants.getApiKetValue)
+        keyChainService.save(key, forKey: Constants.getApiKetValue)
+        fetchMovies(filter)
+    }
+
+    func apiKeyCheckAction(_ completion: () -> Void, filter: NetworkService.ParameterType) {
+        if UserDefaults.standard.bool(forKey: Constants.getApiKetValue) == false {
+            completion()
+        } else {
+            fetchMovies(filter)
+        }
+    }
+
     func selectedRowAction(tableView: UITableView, selectedCell: IndexPath?) {
         let selectedCell = tableView.indexPathForSelectedRow
         guard
@@ -64,5 +108,15 @@ final class FilmsViewModel: FilmsViewModelProtocol {
         cell.createCurrentMovie()
         guard let movie = cell.movie else { return }
         coordinator.addDependency(movie: movie)
+    }
+}
+
+/// Константы
+private extension FilmsViewModel {
+    enum Constants {
+        static let topRatedFilmsFilter = "topRated"
+        static let upcomingFilmsFilter = "upcoming"
+        static let popularFilmsFilter = "popular"
+        static let getApiKetValue = "key"
     }
 }

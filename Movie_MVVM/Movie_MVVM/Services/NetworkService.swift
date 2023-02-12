@@ -5,13 +5,25 @@ import Foundation
 
 /// Сетевой сервис
 struct NetworkService: NetworkServicable {
+    // MARK: - Private properties
+
+    private let keyChainService: KeyChainServiceProtocol
+
+    // MARK: - init
+
+    init(keyChainService: KeyChainServiceProtocol) {
+        self.keyChainService = keyChainService
+    }
+
     // MARK: - Public methods
 
     func fetchMovies(parameter: ParameterType, _ completion: @escaping (Result<[Movie], Error>) -> Void) {
         let session = URLSession.shared
-        guard let url =
+        guard
+            let apiKey = keyChainService.get(key: Constants.apiKeyGetValue),
+            let url =
             URL(
-                string: "\(Constants.baseURL)\(parameter.path)\(Constants.filmsListAPIKey)"
+                string: "\(Constants.baseURL)\(parameter.path)\(Constants.equelApiKeyText)\(apiKey)\(Constants.moviesListLanguageValue)"
             )
         else { return }
         session.dataTask(with: URLRequest(url: url)) { data, _, error in
@@ -31,7 +43,11 @@ struct NetworkService: NetworkServicable {
 
     func fetchActors(id: String, _ completion: @escaping (Result<[Actor], Error>) -> Void) {
         guard
-            let url = URL(string: "\(Constants.moviesStartURLString)\(id)\(Constants.actorsEndURLString)")
+            let apiKey = keyChainService.get(key: Constants.apiKeyGetValue),
+            let url =
+            URL(
+                string: "\(Constants.moviesStartURLString)\(id)\(Constants.creditsText)\(apiKey)\(Constants.engLanguageValue)"
+            )
         else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             do {
@@ -50,7 +66,11 @@ struct NetworkService: NetworkServicable {
 
     func fetchTrailers(id: String, _ completion: @escaping (Result<[Trailer], Error>) -> Void) {
         guard
-            let url = URL(string: "\(Constants.moviesStartURLString)\(id)\(Constants.trailerEndURLString)")
+            let apiKey = keyChainService.get(key: Constants.apiKeyGetValue),
+            let url =
+            URL(
+                string: "\(Constants.moviesStartURLString)\(id)\(Constants.videosValue)\(Constants.equelApiKeyText)\(apiKey)\(Constants.rusLanguageValue)"
+            )
         else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             do {
@@ -79,11 +99,18 @@ extension NetworkService {
         static let apiKeyValue = "56c45ba32cd76399770966658bf65ca0"
         static let languageText = "language"
         static let languageValue = "ru-RU&page=1"
+        static let creditsText = "/credits?api_key="
         static let moviesStartURLString = "https://api.themoviedb.org/3/movie/"
         static let actorsEndURLString = "/credits?api_key=56c45ba32cd76399770966658bf65ca0&language=en-US"
         static let trailerEndURLString = "/videos?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU"
         static let filmCellImageURLString = "http://image.tmdb.org/t/p/w500"
+        static let equelApiKeyText = "?api_key="
+        static let videosValue = "/videos"
+        static let rusLanguageValue = "&language=ru-RU"
+        static let engLanguageValue = "&language=en-US"
+        static let moviesListLanguageValue = "&language=ru-RU&page=1"
         static let filmsListAPIKey = "?api_key=56c45ba32cd76399770966658bf65ca0&language=ru-RU&page=1"
+        static let apiKeyGetValue = "key"
     }
 
     enum ParameterType {

@@ -26,7 +26,8 @@ final class FilmsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        viewModel?.fetchMovies(actualFilter)
+        callApiAlertAction()
+        viewModel?.loadMovies(actualFilter)
         updateViewData()
     }
 
@@ -50,6 +51,15 @@ final class FilmsTableViewController: UITableViewController {
         tableView.register(FilterTableViewCell.self, forCellReuseIdentifier: Constants.filterCellIdentifier)
         tableView.showsVerticalScrollIndicator = false
     }
+
+    private func callApiAlertAction() {
+        viewModel?.apiKeyCheckAction({
+            callAlert(title: Constants.setApiAlertTitle, actionTitle: Constants.setText) { [weak self] key in
+                guard let self = self else { return }
+                self.viewModel?.saveApiKeyAction(key, filter: self.actualFilter)
+            }
+        }, filter: actualFilter)
+    }
 }
 
 /// Константы и типы ячеек
@@ -59,7 +69,9 @@ extension FilmsTableViewController {
         static let filterCellIdentifier = "filter"
         static let blueViewColorName = "blueView"
         static let filmsText = "Фильмы"
+        static let setApiAlertTitle = "Set API Key"
         static let errorText = "Error: "
+        static let setText = "Set"
     }
 
     enum CellTypes {
@@ -97,7 +109,7 @@ extension FilmsTableViewController {
             cell.sendURLHandler = { [weak self] filter in
                 guard let self = self else { return }
                 self.actualFilter = filter
-                self.viewModel?.fetchMovies(self.actualFilter)
+                self.viewModel?.loadMovies(self.actualFilter)
             }
 
             return cell

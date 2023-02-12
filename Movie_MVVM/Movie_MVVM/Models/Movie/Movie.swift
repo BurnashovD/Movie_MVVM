@@ -4,7 +4,7 @@
 import UIKit
 
 /// Фильм
-struct Movie: Decodable {
+final class Movie: Decodable {
     /// Изображение к фильму
     let backdropPath: String
     /// Идентификатор
@@ -19,6 +19,8 @@ struct Movie: Decodable {
     var filmImage: UIImage
     /// Идентификатор выбранного фильма
     let currentFilmId: String
+    /// Фильтр по категориям
+    var filter: String
 
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"
@@ -29,6 +31,7 @@ struct Movie: Decodable {
         case voteAverage = "vote_average"
         case currentFilmId
         case filmImage
+        case filter
     }
 
     init(from decoder: Decoder) throws {
@@ -41,6 +44,7 @@ struct Movie: Decodable {
         voteAverage = try container.decode(Double.self, forKey: .voteAverage)
         currentFilmId = ""
         filmImage = UIImage()
+        filter = ""
     }
 
     init?(
@@ -51,7 +55,8 @@ struct Movie: Decodable {
         title: String,
         voteAverage: Double,
         filmImage: UIImage,
-        currentFilmId: String
+        currentFilmId: String,
+        filter: String
     ) {
         self.backdropPath = backdropPath
         self.id = id
@@ -61,5 +66,6 @@ struct Movie: Decodable {
         self.voteAverage = voteAverage
         self.filmImage = filmImage
         self.currentFilmId = currentFilmId
+        self.filter = filter
     }
 }

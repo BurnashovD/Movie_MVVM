@@ -10,6 +10,7 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     var movie: Movie?
     var trailers: [Trailer] = []
     var actors: [Actor] = []
+
     var updateHandler: (() -> Void)?
     var errorHandler: ((Error) -> Void)?
 
@@ -18,12 +19,14 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
     private var networkService: NetworkServicable
     private var imageService: ImageServicable
     private var coordinator: SecondCoordinatorProtocol
+    private var coreDataService: CoreDataServiceProtocol
 
     // MARK: - init
 
     init(
         networkService: NetworkServicable,
         imageService: ImageServicable,
+        coreDataService: CoreDataServiceProtocol,
         movie: Movie?,
         coordinator: SecondCoordinatorProtocol
     ) {
@@ -31,22 +34,40 @@ final class FilmInfoViewModel: FilmInfoViewModelProtocol {
         self.movie = movie
         self.coordinator = coordinator
         self.imageService = imageService
+        self.coreDataService = coreDataService
     }
 
     // MARK: - Public methods
 
     func fetchActors() {
-        guard let id = movie?.currentFilmId else { return }
+        guard
+            let id = movie?.currentFilmId,
+            let movieId = movie?.id
+        else { return }
         networkService.fetchActors(id: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(actors):
                 self.actors = actors
+                self.coreDataService.saveActors(actors, id: movieId)
                 self.updateHandler?()
             case let .failure(error):
                 self.errorHandler?(error)
             }
         }
+    }
+
+    func loadActors() {
+        guard
+            let id = movie?.id,
+            let coreActors = coreDataService.getActors(id),
+            !coreActors.isEmpty
+        else {
+            fetchActors()
+            return
+        }
+        actors = coreActors
+        updateHandler?()
     }
 
     func viewDidDisapeardAction() {

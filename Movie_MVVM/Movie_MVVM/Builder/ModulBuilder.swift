@@ -9,11 +9,16 @@ final class ModulBuilder: BuilderProtocol {
 
     func makeFilmsModule(coordinator: Coordinatable) -> UITableViewController {
         let view = FilmsTableViewController()
-        let networkService = NetworkService()
+        let keyChainService = KeyChainService()
+        let networkService = NetworkService(keyChainService: keyChainService)
         let imageService = ImageService()
+        let coreDataService = CoreDataService()
+
         let viewModel = FilmsViewModel(
             networkService: networkService,
             imageService: imageService,
+            coreDataService: coreDataService,
+            keyChainService: keyChainService,
             coordinator: coordinator
         )
         view.viewModel = viewModel
@@ -22,11 +27,14 @@ final class ModulBuilder: BuilderProtocol {
 
     func makeFilmInfoModule(coordinator: SecondCoordinatorProtocol, movie: Movie) -> UITableViewController {
         let view = FilmInfoTableViewController()
-        let networkService = NetworkService()
+        let keyChainService = KeyChainService()
+        let networkService = NetworkService(keyChainService: keyChainService)
         let imageService = ImageService()
+        let coreDataService = CoreDataService()
         let viewModel = FilmInfoViewModel(
             networkService: networkService,
             imageService: imageService,
+            coreDataService: coreDataService,
             movie: movie,
             coordinator: coordinator
         )

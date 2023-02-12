@@ -79,7 +79,7 @@ extension ActorsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
-        ) as? ActorsCollectionViewCell else { return UICollectionViewCell() }
+        ) as? ActorsCollectionViewCell, !actors.isEmpty else { return UICollectionViewCell() }
 
         cell.configure(actors[indexPath.row])
         return cell

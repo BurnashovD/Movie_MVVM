@@ -84,7 +84,8 @@ final class FilmTableViewCell: UITableViewCell {
             title: filmNameLabel.text ?? "",
             voteAverage: 0.0,
             filmImage: filmImageView.image ?? UIImage(),
-            currentFilmId: filmId
+            currentFilmId: filmId,
+            filter: ""
         )
     }
 
