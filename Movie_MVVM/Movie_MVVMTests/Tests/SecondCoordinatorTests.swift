@@ -43,6 +43,11 @@ final class SecondCoordinatorTests: XCTestCase {
         XCTAssertTrue(root is FilmInfoTableViewController)
     }
 
+    func testDidFinish() {
+        secondCoordinator?.didFinish()
+        XCTAssertTrue(parentCoordinator?.childCoordinators.isEmpty == true)
+    }
+
     func testOpenWebView() {
         secondCoordinator?.initial()
         guard let trailer = trailer else { return }
