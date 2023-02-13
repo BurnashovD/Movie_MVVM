@@ -7,15 +7,15 @@ import Foundation
 /// Мок прокси
 final class MockProxy: ProxyProtocol {
     // MARK: - Public properties
-    
+
     var cache = NSCache<NSString, NSData>()
-    
+
     // MARK: - Private properties
-    
+
     private var imageAPIService = MockImageAPIService()
 
     // MARK: - Public properties
-    
+
     func loadFromCache(posterPath: String, _ completion: @escaping (Data) -> Void) {
         guard let cacheData = cache.object(forKey: NSString(string: posterPath)) else {
             fetchImageData(posterPath: posterPath) { nsData in
@@ -30,7 +30,7 @@ final class MockProxy: ProxyProtocol {
     }
 
     // MARK: - Private properties
-    
+
     private func fetchImageData(posterPath: String, _ completion: @escaping (NSData) -> Void) {
         imageAPIService.fetchImage(posterPath) { result in
             switch result {

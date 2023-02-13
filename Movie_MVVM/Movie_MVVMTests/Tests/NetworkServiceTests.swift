@@ -7,11 +7,11 @@ import XCTest
 /// Тесты сетевого слоя
 final class NetworkServiceTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var networkService: NetworkServicable?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         networkService = MockNetworkService()
     }

@@ -7,7 +7,7 @@ import XCTest
 /// Тесты вью модели экрана списка фильмов
 final class FilmsViewModelTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var networkService = MockNetworkService()
     private var imageService = MockImageService()
     private var coreDataService = CoreDataService()
@@ -16,9 +16,9 @@ final class FilmsViewModelTests: XCTestCase {
     private var coordinator: Coordinatable?
     private var movies: [Movie] = []
     private var filmsViewModel: FilmsViewModelProtocol?
-    
+
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         coordinator = MainCoordintor(navigationController: MainNavigationController(), builder: builder)
         guard let coordinator = coordinator else { return }
@@ -67,7 +67,7 @@ final class FilmsViewModelTests: XCTestCase {
 
     func testSaveApiAction() {
         filmsViewModel?.saveApiKeyAction(Constants.testApiKey, filter: .popular)
-        let isKeySetted = UserDefaults.standard.bool(forKey: Constants.testKey)
+        let isKeySetted = UserDefaults.standard.bool(forKey: Constants.testValue)
         XCTAssertTrue(isKeySetted)
     }
 
@@ -92,7 +92,7 @@ final class FilmsViewModelTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockMovie() {
         networkService.fetchMovies(parameter: .popular) { result in
             switch result {

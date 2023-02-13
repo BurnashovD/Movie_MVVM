@@ -7,7 +7,7 @@ import XCTest
 /// Тесты вью модели экрана с информацией о выбранном фильме
 final class FilmInfoViewModelTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var networkService = MockNetworkService()
     private var imageService = MockImageService()
     private var coreDataService = CoreDataService()
@@ -20,7 +20,7 @@ final class FilmInfoViewModelTests: XCTestCase {
     private var trailers: [Trailer]?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         fetchMockMovie()
         fetchMockActors()
@@ -69,7 +69,7 @@ final class FilmInfoViewModelTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockActors() {
         networkService.fetchActors(id: "") { result in
             switch result {

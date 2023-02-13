@@ -7,7 +7,7 @@ import Foundation
 /// Мок сетевого слоя
 final class MockNetworkService: NetworkServicable {
     // MARK: - Public methods
-    
+
     func fetchMovies(
         parameter: NetworkService.ParameterType,
         _ completion: @escaping (Result<[Movie], Error>) -> Void
@@ -36,7 +36,7 @@ final class MockNetworkService: NetworkServicable {
     }
 
     // MARK: - Private methods
-    
+
     private func readLocalJSONFile(fileName: String) -> Data? {
         do {
             guard let filePath = Bundle.main.path(forResource: fileName, ofType: "json") else { return nil }

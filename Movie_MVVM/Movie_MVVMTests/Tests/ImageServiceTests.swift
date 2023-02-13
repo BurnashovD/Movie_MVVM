@@ -7,11 +7,11 @@ import XCTest
 /// Тесты сервиса обработки изображений
 final class ImageServiceTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var imageService: ImageServicable?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         imageService = MockImageService()
     }

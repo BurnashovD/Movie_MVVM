@@ -7,7 +7,7 @@ import XCTest
 /// Тесты координатора
 final class CoordinatorTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var mainCoordinator: Coordinatable?
     private var childCoordinator: SecondCoordinatorProtocol?
     private var networkService = MockNetworkService()
@@ -16,7 +16,7 @@ final class CoordinatorTests: XCTestCase {
     private var movie: Movie?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         fetchMockMovie()
         mainCoordinator = MainCoordintor(navigationController: navController, builder: builder)
@@ -59,7 +59,7 @@ final class CoordinatorTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockMovie() {
         networkService.fetchMovies(parameter: .popular) { result in
             switch result {

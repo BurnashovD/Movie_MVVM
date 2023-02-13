@@ -7,11 +7,11 @@ import XCTest
 /// Тесты кичейн сервиса
 final class KeyChainServiceTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var keychainService: KeyChainServiceProtocol?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         keychainService = MockKeyChainService()
     }

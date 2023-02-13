@@ -7,7 +7,7 @@ import XCTest
 /// Тесты сборщика модулей
 final class ModulBuilderTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var builder: BuilderProtocol?
     private var coordinator: SecondCoordinatorProtocol?
     private var movie: Movie?
@@ -15,7 +15,7 @@ final class ModulBuilderTests: XCTestCase {
     private var trailer: Trailer?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         fetchMockMovie()
         fetchMockTrailer()
@@ -54,7 +54,7 @@ final class ModulBuilderTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockMovie() {
         networkService.fetchMovies(parameter: .popular) { result in
             switch result {

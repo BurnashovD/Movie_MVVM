@@ -87,6 +87,7 @@
 		A5D07AA62999909200651C87 /* ModulBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07AA52999909200651C87 /* ModulBuilderTests.swift */; };
 		A5D07AA82999953D00651C87 /* TrailerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07AA72999953D00651C87 /* TrailerViewModelTests.swift */; };
 		A5D07AAA2999AA6B00651C87 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07AA92999AA6B00651C87 /* CoordinatorTests.swift */; };
+		A5D07AAC2999BA3900651C87 /* SecondCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D07AAB2999BA3900651C87 /* SecondCoordinatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +189,7 @@
 		A5D07AA52999909200651C87 /* ModulBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulBuilderTests.swift; sourceTree = "<group>"; };
 		A5D07AA72999953D00651C87 /* TrailerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewModelTests.swift; sourceTree = "<group>"; };
 		A5D07AA92999AA6B00651C87 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
+		A5D07AAB2999BA3900651C87 /* SecondCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCoordinatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -451,6 +453,7 @@
 				A5D07AA52999909200651C87 /* ModulBuilderTests.swift */,
 				A5D07AA72999953D00651C87 /* TrailerViewModelTests.swift */,
 				A5D07AA92999AA6B00651C87 /* CoordinatorTests.swift */,
+				A5D07AAB2999BA3900651C87 /* SecondCoordinatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				A5D07A962999631800651C87 /* ProxyTests.swift in Sources */,
 				A5D07AA82999953D00651C87 /* TrailerViewModelTests.swift in Sources */,
 				A5D07AA62999909200651C87 /* ModulBuilderTests.swift in Sources */,
+				A5D07AAC2999BA3900651C87 /* SecondCoordinatorTests.swift in Sources */,
 				A5D07A862999545D00651C87 /* ActorJSON.json in Sources */,
 				A5D07A782999504400651C87 /* MockNetworkService.swift in Sources */,
 				A5D07A9029995B8300651C87 /* ParseServiceTests.swift in Sources */,

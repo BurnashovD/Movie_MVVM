@@ -7,10 +7,11 @@ import XCTest
 /// Тесты прокси сервиса
 final class ProxyTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var proxy: ProxyProtocol?
 
     // MARK: - Public methods
+
     override func setUpWithError() throws {
         proxy = MockProxy()
     }

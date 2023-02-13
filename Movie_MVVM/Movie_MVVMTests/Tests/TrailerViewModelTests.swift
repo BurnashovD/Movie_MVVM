@@ -8,7 +8,7 @@ import XCTest
 /// Тесты вью модели экрана с трейлером к фильму
 final class TrailerViewModelTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var trailerViewModel: TrailerViewModelProtocol?
     private var coordinator: SecondCoordinatorProtocol?
     private var networkService = MockNetworkService()
@@ -18,7 +18,7 @@ final class TrailerViewModelTests: XCTestCase {
     private var movie: Movie?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         fetchMockTrailer()
         fetchMockMovie()
@@ -47,7 +47,7 @@ final class TrailerViewModelTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockTrailer() {
         networkService.fetchTrailers(id: "") { result in
             switch result {

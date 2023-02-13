@@ -7,14 +7,14 @@ import XCTest
 /// Тесты сервиса сохранения данных в кордату
 final class CoreDataServiceTests: XCTestCase {
     // MARK: - Private properties
-    
+
     private var coreDataService = CoreDataService()
     private var networkService = MockNetworkService()
     private var movies: [Movie]?
     private var actors: [Actor]?
 
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {
         fetchMockMovie()
         fetchMockActors()
@@ -32,7 +32,7 @@ final class CoreDataServiceTests: XCTestCase {
         XCTAssertNotNil(coreMovie)
         XCTAssertEqual(coreMovie?.title, movies.first?.title)
     }
-    
+
     func testGetActors() {
         guard let actors = actors, let id = movies?.first?.id else { return }
         coreDataService.saveActors(actors, id: id)
@@ -44,7 +44,7 @@ final class CoreDataServiceTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func fetchMockActors() {
         networkService.fetchActors(id: "") { result in
             switch result {

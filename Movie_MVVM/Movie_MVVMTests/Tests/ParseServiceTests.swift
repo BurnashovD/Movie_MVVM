@@ -7,7 +7,7 @@ import XCTest
 /// Тесты парсинг сервиса
 final class ParseServiceTests: XCTestCase {
     // MARK: - Public methods
-    
+
     override func setUpWithError() throws {}
 
     override func tearDownWithError() throws {}
@@ -39,10 +39,11 @@ final class ParseServiceTests: XCTestCase {
     func testPerformanceExample() throws { measure {} }
 
     // MARK: - Private methods
-    
+
     private func readLocalJSONFile(fileName: String) -> Data? {
         do {
-            guard let filePath = Bundle.main.path(forResource: fileName, ofType: Constants.jsonFileType) else { return nil }
+            guard let filePath = Bundle.main.path(forResource: fileName, ofType: Constants.jsonFileType)
+            else { return nil }
             let fileUrl = URL(fileURLWithPath: filePath)
             let data = try Data(contentsOf: fileUrl)
             return data

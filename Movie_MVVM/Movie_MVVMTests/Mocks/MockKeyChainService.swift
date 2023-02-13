@@ -8,11 +8,11 @@ import KeychainSwift
 /// Мок кичейн сервиса
 final class MockKeyChainService: KeyChainServiceProtocol {
     // MARK: - Private propeties
-    
+
     private var keychain = KeychainSwift()
 
     // MARK: - Public methods
-    
+
     func save(_ value: String, forKey key: String) {
         keychain.set(value, forKey: key)
     }

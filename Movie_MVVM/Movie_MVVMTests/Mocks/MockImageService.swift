@@ -7,11 +7,11 @@ import UIKit
 /// Мок сервиса обработки данных изображений
 final class MockImageService: ImageServicable {
     // MARK: - Private properties
-    
+
     private var imageAPIService = MockImageAPIService()
-    
+
     // MARK: - Public methods
-    
+
     func fetchImage(_ url: String, _ completion: @escaping ((Result<Data, Error>) -> Void)) {
         imageAPIService.fetchImage("") { result in
             switch result {
