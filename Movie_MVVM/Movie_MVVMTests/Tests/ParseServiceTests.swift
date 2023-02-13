@@ -8,9 +8,13 @@ import XCTest
 final class ParseServiceTests: XCTestCase {
     // MARK: - Public methods
 
-    override func setUpWithError() throws {}
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+    }
 
-    override func tearDownWithError() throws {}
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+    }
 
     func testParseMovies() {
         guard

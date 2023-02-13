@@ -13,10 +13,12 @@ final class ImageServiceTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         imageService = MockImageService()
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         imageService = nil
     }
 

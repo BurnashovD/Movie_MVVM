@@ -20,6 +20,7 @@ final class TrailerViewModelTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         fetchMockTrailer()
         fetchMockMovie()
         guard let movie = movie else { return }
@@ -34,6 +35,7 @@ final class TrailerViewModelTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         trailerViewModel = nil
         trailer = nil
     }

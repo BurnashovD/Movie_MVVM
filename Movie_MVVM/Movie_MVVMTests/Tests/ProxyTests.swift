@@ -13,10 +13,12 @@ final class ProxyTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         proxy = MockProxy()
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         proxy = nil
     }
 

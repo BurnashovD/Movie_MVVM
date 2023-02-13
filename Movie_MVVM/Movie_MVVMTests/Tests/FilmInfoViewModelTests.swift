@@ -22,6 +22,7 @@ final class FilmInfoViewModelTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         fetchMockMovie()
         fetchMockActors()
         fetchMockTrailer()
@@ -43,6 +44,7 @@ final class FilmInfoViewModelTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         filmInfoViewModel = nil
         movie = nil
         actors = nil

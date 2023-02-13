@@ -18,6 +18,7 @@ final class CoordinatorTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         fetchMockMovie()
         mainCoordinator = MainCoordintor(navigationController: navController, builder: builder)
         guard let mainCoordinator = mainCoordinator, let movie = movie else { return }
@@ -30,6 +31,7 @@ final class CoordinatorTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         mainCoordinator = nil
     }
 

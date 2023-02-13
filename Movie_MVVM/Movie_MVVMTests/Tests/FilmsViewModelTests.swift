@@ -20,6 +20,7 @@ final class FilmsViewModelTests: XCTestCase {
     // MARK: - Public methods
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         coordinator = MainCoordintor(navigationController: MainNavigationController(), builder: builder)
         guard let coordinator = coordinator else { return }
         filmsViewModel = FilmsViewModel(
@@ -32,6 +33,7 @@ final class FilmsViewModelTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         filmsViewModel = nil
     }
 
