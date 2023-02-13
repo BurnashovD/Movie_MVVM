@@ -11,7 +11,7 @@ final class Movie_MVVMUITests: XCTestCase {
 
     private var filmsTableView: XCUIElement?
 
-    // MARK: - Piblic methods
+    // MARK: - Public methods
 
     override func setUpWithError() throws {
         continueAfterFailure = false

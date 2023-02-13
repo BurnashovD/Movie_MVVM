@@ -14,7 +14,7 @@ final class MockProxy: ProxyProtocol {
 
     private var imageAPIService = MockImageAPIService()
 
-    // MARK: - Public properties
+    // MARK: - Public methods
 
     func loadFromCache(posterPath: String, _ completion: @escaping (Data) -> Void) {
         guard let cacheData = cache.object(forKey: NSString(string: posterPath)) else {
@@ -29,7 +29,7 @@ final class MockProxy: ProxyProtocol {
         completion(imageData)
     }
 
-    // MARK: - Private properties
+    // MARK: - Private methods
 
     private func fetchImageData(posterPath: String, _ completion: @escaping (NSData) -> Void) {
         imageAPIService.fetchImage(posterPath) { result in
