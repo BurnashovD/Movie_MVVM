@@ -25,7 +25,8 @@ final class TrailerViewModel: TrailerViewModelProtocol {
 
     func loadWebView(webView: WKWebView) {
         guard
-            let trailer = trailer, let url = URL(string: "\(Constants.youTubeURLString)\(trailer.key)")
+            let trailer = trailer,
+            let url = URL(string: "\(Constants.youTubeURLString)\(trailer.key)")
         else { return }
         let request = URLRequest(url: url)
         webView.load(request)

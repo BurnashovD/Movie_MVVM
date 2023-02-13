@@ -1,0 +1,35 @@
+//
+//  MockParseService.swift
+//  Movie_MVVMTests
+//
+//  Created by Daniil on 12.02.2023.
+//
+
+import Foundation
+@testable import Movie_MVVM
+
+/// Мок парсинг сервиса
+final class MockParseService: ParseServicable {
+    // MARK: - Public methods
+    
+    static func parseMoviesData(_ data: Data) -> [Movie]? {
+        do {
+            let movies = try? JSONDecoder().decode(MovieResults.self, from: data).results
+            return movies
+        }
+    }
+    
+    static func parseActorsData(_ data: Data) -> [Actor]? {
+        do {
+            let actors = try? JSONDecoder().decode(ActorsResults.self, from: data).cast
+            return actors
+        }
+    }
+    
+    static func parseTrailersData(_ data: Data) -> [Trailer]? {
+        do {
+            let trailers = try? JSONDecoder().decode(TrailerResults.self, from: data).results
+            return trailers
+        }
+    }
+}

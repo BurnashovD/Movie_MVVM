@@ -16,7 +16,7 @@ final class TrailerWebPageViewController: UIViewController {
 
     // MARK: - Public properties
 
-    var viewModel: TrailerViewModel?
+    var viewModel: TrailerViewModelProtocol?
 
     // MARK: - LifeCycle
 

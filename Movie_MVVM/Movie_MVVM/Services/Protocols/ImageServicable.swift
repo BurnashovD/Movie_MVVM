@@ -5,5 +5,5 @@ import Foundation
 
 /// Протокол сервиса изображений
 protocol ImageServicable {
-    func fetchImage(_ url: String, _ completion: @escaping ((Data) -> Void))
+    func fetchImage(_ url: String, _ completion: @escaping ((Result<Data, Error>) -> Void))
 }
