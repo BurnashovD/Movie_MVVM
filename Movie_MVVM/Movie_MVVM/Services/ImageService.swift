@@ -8,13 +8,19 @@ final class ImageService: ImageServicable {
     // MARK: - Private properties
 
     private let imageAPIService = ImageAPIService()
-    private let proxy = Proxy()
+    private let proxy: ProxyProtocol
+
+    // MARK: - init
+
+    init(proxy: ProxyProtocol) {
+        self.proxy = proxy
+    }
 
     // MARK: - Public methods
 
-    func fetchImage(_ url: String, _ completion: @escaping ((Data) -> Void)) {
+    func fetchImage(_ url: String, _ completion: @escaping ((Result<Data, Error>) -> Void)) {
         proxy.loadFromCache(posterPath: url) { data in
-            completion(data)
+            completion(.success(data))
         }
     }
 }
